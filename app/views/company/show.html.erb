@@ -1,0 +1,412 @@
+<head>
+    <script src="https://www.amcharts.com/lib/3/amcharts.js?x"></script>
+    <script src="https://www.amcharts.com/lib/3/serial.js?x"></script>
+    <script src="https://www.amcharts.com/lib/3/themes/dark.js"></script>
+    </head>
+    <style>
+    body{
+        background-color: #161616;  
+      }
+    a{
+        visibility: hidden;
+    }
+    h1{
+        color:white;
+        margin-left: 40%;
+        width: 50%;
+    }
+    
+    p{
+        color:white;
+        margin-left: 38%;
+        width: 25%;
+        animation: fadeInAnimation ease 12s; 
+        animation-iteration-count: 1; 
+        animation-fill-mode: forwards; 
+    }
+    
+    .hide {
+        display: none;
+      }
+    .hover_hide:hover + .hide {
+        display: block;
+        color: red;
+      }
+    h2 { 
+        color:white;
+        margin-left: 40%;
+        width: 50%;
+        animation: fadeInAnimation ease 6s; 
+        animation-iteration-count: 1; 
+        animation-fill-mode: forwards; 
+    } 
+    @keyframes fadeInAnimation { 
+        0% { 
+            opacity: 0; 
+        } 
+        100% { 
+            opacity: 1; 
+        } 
+    } 
+      #chartdiv {	
+         width		: 100%;
+          height		: 500px;
+          background-color: #161616;  
+      }
+      
+      .amcharts-graph-human .amcharts-graph-stroke {
+        stroke-dasharray: 3px 3px;
+        stroke-linejoin: round;
+        stroke-linecap: round;
+        -webkit-animation: am-moving-dashes 1s linear infinite;
+        animation: am-moving-dashes 1s linear infinite;
+      }
+      
+      @-webkit-keyframes am-moving-dashes {
+        100% {
+          stroke-dashoffset: -31px;
+        }
+      }
+      @keyframes am-moving-dashes {
+        100% {
+          stroke-dashoffset: -31px;
+        }
+      }
+      
+      
+      .lastBullet {
+        -webkit-animation: am-pulsating 1s ease-out infinite;
+        animation: am-pulsating 1s ease-out infinite;
+      }
+      @-webkit-keyframes am-pulsating {
+        0% {
+          stroke-opacity: 1;
+          stroke-width: 0px;
+        }
+        100% {
+          stroke-opacity: 0;
+          stroke-width: 50px;
+        }
+      }
+      @keyframes am-pulsating {
+        0% {
+          stroke-opacity: 1;
+          stroke-width: 0px;
+        }
+        100% {
+          stroke-opacity: 0;
+          stroke-width: 50px;
+        }
+      }
+      
+      .amcharts-graph-column-front {
+        -webkit-transition: all .3s .3s ease-out;
+        transition: all .3s .3s ease-out;
+      }
+      .amcharts-graph-column-front:hover {
+        fill: #496375;
+        stroke: #496375;
+        -webkit-transition: all .3s ease-out;
+        transition: all .3s ease-out;
+      }
+      
+      .amcharts-graph-robot {
+        stroke-linejoin: round;
+        stroke-linecap: round;
+        stroke-dasharray: 500%;
+        stroke-dasharray: 0 \0/;    /* fixes IE prob */
+        stroke-dashoffset: 0 \0/;   /* fixes IE prob */
+        -webkit-animation: am-draw 40s;
+        animation: am-draw 40s;
+      }
+      @-webkit-keyframes am-draw {
+          0% {
+              stroke-dashoffset: 500%;
+          }
+          100% {
+              stroke-dashoffset: 0%;
+          }
+      }
+      @keyframes am-draw {
+          0% {
+              stroke-dashoffset: 500%;
+          }
+          100% {
+              stroke-dashoffset: 0%;
+          }
+      }
+    </style>
+    
+    <script>
+    
+        function getRandomInt(max) {
+            return Math.floor(Math.random() * Math.floor(max));
+        }
+    
+        function getNeg()
+        {
+            rand = Math.floor(Math.random() * Math.floor(2));
+            return rand == 0 ? 1 : -1
+        }
+    
+        function get_day(date_obj,num_days)
+        {
+            var day_num = 1000 * 60 * 60 * 24;
+            var ret_day = date_obj - (day_num*num_days);
+            ret_day = new Date(ret_day)
+            return String(ret_day.getFullYear()) + "-" + String(ret_day.getMonth()+1).padStart(2, '0') + "-" + String(ret_day.getDate()).padStart(2, '0')
+        }
+    
+        function getCookie(name) {
+            // Split cookie string and get all individual name=value pairs in an array
+            var cookieArr = document.cookie.split(";");
+            
+            // Loop through the array elements
+            for(var i = 0; i < cookieArr.length; i++) {
+                var cookiePair = cookieArr[i].split("=");
+                
+                /* Removing whitespace at the beginning of the cookie name
+                and compare it with the given string */
+                if(name == cookiePair[0].trim()) {
+                    // Decode the cookie value and return
+                    return decodeURIComponent(cookiePair[1]);
+                }
+            }
+            
+            // Return null if not found
+            return null;
+        }
+        
+        var date = new Date();
+        var yesterday = date - 1000 * 60 * 60 * 24 * 2;   // current date's milliseconds - 1,000 ms * 60 s * 60 mins * 24 hrs * (# of days beyond one to go back)
+        yesterday = new Date(yesterday);
+        console.log(get_day(yesterday,3));
+    
+        var human_trade = 80;
+        var robot_trade = 50;
+        var elf_trade = 30;
+    
+        var chartData = [
+        {
+            "date": get_day(date,13),
+            "Elf": 227 + (getRandomInt(elf_trade) * getNeg()),
+            "Human": 40.71,
+            "Robot": 408
+        },
+        {
+            "date": get_day(date,12),
+            "Elf": 371,
+            "Human": 38.89,
+            "Robot": 482
+        },
+        {
+            "date": get_day(date,11),
+            "Elf": 433,
+            "Human": 34.22,
+            "Robot": 562
+        },
+        {
+            "date": get_day(date,10),
+            "Elf": 345,
+            "Human": 30.35,
+            "Robot": 379
+        },
+        {
+            "date": get_day(date,9),
+            "Elf": 480,
+            "Human": 25.83,
+            "Robot": 501
+        },
+        {
+            "date": get_day(date,8),
+            "Elf": 386,
+            "Human": 30.46,
+            "Robot": 443
+        },
+        {
+            "date": get_day(date,7),
+            "Elf": 348,
+            "Human": 29.94,
+            "Robot": 405
+        },
+        {
+            "date": get_day(date,6),
+            "Elf": 238,
+            "Human": 29.76,
+            "Robot": 309
+        },
+        {
+            "date": get_day(date,5),
+            "Elf": 218,
+            "Human": 32.8,
+            "Robot": 287
+        },
+        {
+            "date": get_day(date,4),
+            "Elf": 349,
+            "Human": 35.49,
+            "Robot": 485
+        },
+        {
+            "date": get_day(date,3),
+            "Elf": 603,
+            "Human": 39.1,
+            "Robot": 890
+        },
+        {
+            "date": get_day(date,2),
+            "Elf": 534,
+            "Human": 39.74,
+            "Robot": 810
+        },
+        {
+            "date": get_day(date,1),
+            "Elf": 425,
+            "Robot": 670,
+            "Human": 40.75,
+            "alpha":0.4
+        },
+        {
+            "date": get_day(date,0),
+            "Human": 36.1,
+            "Robot": 470,
+            "bulletClass": "lastBullet"
+        },
+        {
+            "date": get_day(date,-1)
+        },
+        {
+            "date": get_day(date,-2)
+        },
+        {
+            "date": get_day(date,-3)
+        },
+        {
+            "date": get_day(date,-4)
+        },
+        {
+            "date": get_day(date,-5)
+        }
+    ];
+    var chart = AmCharts.makeChart("chartdiv", {
+      type: "serial",
+      theme: "dark",
+      dataDateFormat: "YYYY-MM-DD",
+      dataProvider: chartData,
+    
+      addClassNames: true,
+      startRobot: 1,
+      color: "#FFFFFF",
+      marginLeft: 0,
+    
+      categoryField: "date",
+      categoryAxis: {
+        parseDates: true,
+        minPeriod: "DD",
+        autoGridCount: false,
+        gridCount: 50,
+        gridAlpha: 0.1,
+        gridColor: "#FFFFFF",
+        axisColor: "#555555",
+        dateFormats: [{
+            period: 'DD',
+            format: 'DD'
+        }, {
+            period: 'WW',
+            format: 'MMM DD'
+        }, {
+            period: 'MM',
+            format: 'MMM'
+        }, {
+            period: 'YYYY',
+            format: 'YYYY'
+        }]
+      },
+    
+      valueAxes: [{
+        id: "a1",
+        title: "Gold Pieces",
+        gridAlpha: 0,
+        axisAlpha: 0
+      }],
+      graphs: [{
+        id: "g1",
+        valueField:  "Elf",
+        title:  "Elf: ",
+        type:  "column",
+        fillAlphas:  0.9,
+        valueAxis:  "a1",
+        balloonText:  "[[value]] GP",
+        lineColor:  "#263138",
+        alphaField:  "alpha",
+      },{
+        id: "human",
+        valueField: "Human",
+        classNameField: "bulletClass",
+        title: "Human:",
+        type: "line",
+        valueAxis: "a2",
+        lineColor: "#66ff00",
+        lineThickness: 1,
+        legendValueText: "[[value]] GP",
+        descriptionField: "townName",
+        bullet: "round",
+        bulletSizeField: "townSize",
+        bulletBorderColor: "#786c56",
+        bulletBorderAlpha: 1,
+        bulletBorderThickness: 2,
+        bulletColor: "#000000",
+        labelPosition: "right",
+        balloonText: "[[value]] GP",
+        showBalloon: true,
+        animationPlayed: true,
+      },{
+        id: "robot",
+        title: "Robot: ",
+        valueField: "Robot",
+        type: "line",
+        valueAxis: "a3",
+        lineColor: "#ff5755",
+        balloonText: "[[value]] GP",
+        lineThickness: 1,
+        legendValueText: "[[value]]",
+        bullet: "square",
+        bulletBorderColor: "#ff5755",
+        bulletBorderThickness: 1,
+        bulletBorderAlpha: 1,
+        dashLengthField: "dashLength",
+        animationPlayed: true
+      }],
+    
+      chartCursor: {
+        zoomable: false,
+        categoryBalloonDateFormat: "DD",
+        cursorAlpha: 0,
+        valueBalloonsEnabled: false
+      },
+      legend: {
+        bulletType: "round",
+        equalWidths: false,
+        valueWidth: 120,
+        useGraphSettings: true,
+        color: "#FFFFFF"
+      }
+    });
+    
+    
+    document.cookie = "username='Morgana'; max-age=31536000";
+    document.cookie = "silver_pieces=300; max-age=31536000";
+    document.cookie = "current_company_id=2; max-age=31536000";
+    var cookie_obj = document.cookie;
+    console.log(getCookie("username"));
+    </script>
+    
+    
+    <br>
+    <h1>Zail Stock Exchange</h1>
+    <br>
+    <div id="chartdiv"></div>	
+    
+    <h2 class="hoverHide" syle="text-decoration: underline;">Jedson's Robot Oil</h2>
+    <p>Jedson's Robot Oil has been a steady source of oil for robots over the years</p>
+    

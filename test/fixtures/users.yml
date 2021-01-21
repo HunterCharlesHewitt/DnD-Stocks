@@ -1,0 +1,21 @@
+# Read about fixtures at https://api.rubyonrails.org/classes/ActiveRecord/FixtureSet.html
+
+one:
+  name: MyString
+  wealth: 
+  minute_stocks: 
+  day_stocks: 
+  company_invested: MyString
+  integer: MyString
+  reh: MyString
+  : 1
+
+two:
+  name: MyString
+  wealth: 
+  minute_stocks: 
+  day_stocks: 
+  company_invested: MyString
+  integer: MyString
+  reh: MyString
+  : 1

@@ -10,6 +10,29 @@
 #
 # It's strongly recommended that you check this file into your version control system.
 
-ActiveRecord::Schema.define(version: 0) do
+ActiveRecord::Schema.define(version: 2021_01_21_173358) do
+
+  create_table "companies", force: :cascade do |t|
+    t.string "name"
+    t.text "minute_stocks_robot", default: "--- []\n"
+    t.text "day_stocks_robot", default: "--- []\n"
+    t.text "minute_stocks_human", default: "--- []\n"
+    t.text "day_stocks_human", default: "--- []\n"
+    t.text "minute_stocks_elf", default: "--- []\n"
+    t.text "day_stocks_elf", default: "--- []\n"
+    t.datetime "created_at", precision: 6, null: false
+    t.datetime "updated_at", precision: 6, null: false
+  end
+
+  create_table "users", force: :cascade do |t|
+    t.string "name"
+    t.text "wealth", default: "--- []\n"
+    t.text "minute_stocks", default: "--- []\n"
+    t.text "day_stocks", default: "--- []\n"
+    t.string "company_invested"
+    t.string "reh"
+    t.datetime "created_at", precision: 6, null: false
+    t.datetime "updated_at", precision: 6, null: false
+  end
 
 end
