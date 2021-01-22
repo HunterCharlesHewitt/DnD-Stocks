@@ -8,14 +8,16 @@ require 'mina/rvm'
 #   repository   - Git repo to clone from. (needed by mina/git)
 #   branch       - Branch name to deploy. (needed by mina/git)
 
-set :application_name, 'dnd_stocks'
-set :domain, '104.236.5.149'
+set :application_name, 'rails-demo'
+set :domain, '104.131.44.209'
 set :user, fetch(:application_name)
 set :deploy_to, "/home/#{fetch(:user)}/app"
 set :repository, 'git@github.com:HunterCharlesHewitt/DnD-Stocks.git'
 set :branch, 'master'
 set :rvm_use_path, '/etc/profile.d/rvm.sh'
-
+on :launch do
+    command "sudo systemctl restart #{fetch(:user)}"
+end
 # Optional settings:
 #   set :user, 'foobar'          # Username in the server to SSH to.
 #   set :port, '30000'           # SSH port number.
