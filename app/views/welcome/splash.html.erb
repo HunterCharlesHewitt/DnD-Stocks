@@ -1,0 +1,90 @@
+<htmL>
+<head>
+
+</head>
+
+<style>
+@import url(https://fonts.googleapis.com/css?family=Source+Code+Pro);
+html,body{
+  height:100%;
+  padding:0;
+  margin:0;
+}
+
+*{
+  box-sizing: border-box;
+  font-family: 'Source Code Pro';
+}
+
+
+.container{
+    height:100%;
+    width:100%;
+    background-color: black;
+}
+
+.kotak{
+  height:50%;
+  width:50%;
+  position: absolute;
+  top: 40%;
+  left: 40%;
+  margin:auto;
+}
+
+.input{
+  width:300px;
+  height:25px;
+  color:white;
+  background-color:transparent;
+  border:0px;
+  border-bottom:2px solid #008000;
+  transition: 0.3s;
+  margin-bottom:25px;
+}
+
+.input:hover{
+  width:300px;
+  border-bottom:2px solid #00FF00;
+}
+
+.input:focus{
+  width:300px;
+  border-bottom:2px solid #00FF00;
+  outline:none;
+}
+
+
+
+.button{
+  background-color:#006400;
+  border:0px #006400;
+  color:white;
+  width:300px;
+  height:35px;
+  transition: 0.3s;
+  border-radius:5%;
+}
+
+.button:hover{
+  cursor:pointer;
+  background-color:#00A300;
+}
+
+</style>
+
+
+
+<body>
+<div class="container">
+  <div class="kotak">
+  <form action="login" method="post">
+    <input class="input" name="name" placeholder="Name">
+    <br>
+    <button class="button">Begin Retinal Scan</button>
+  </form>
+  </div>
+</div>
+</body>
+
+</htmL>

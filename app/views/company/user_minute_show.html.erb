@@ -1,8 +1,8 @@
+<% if session[:user_id] && session[:user_id] == params[:id] %>
 <head>
     <script src="https://www.amcharts.com/lib/3/amcharts.js?x"></script>
     <script src="https://www.amcharts.com/lib/3/serial.js?x"></script>
     <script src="https://www.amcharts.com/lib/3/themes/dark.js"></script>
-    <%=session[:user_id] = params[:id]%>
   </head>
     
     <style>
@@ -198,7 +198,7 @@
         {
             "date": get_day(date,<%=(17-i)%>),
             "Robot": 
-            <% tot = User.find(params[:id]).starting_wealth%>
+            <% tot = 0%>
             <% Share.where(user_id: params[:id]).each do |share|%>
               <%if(share.rob_hum_elf == 0)%>
                 <%tot+= (Company.find(share.company_id).minute_stocks_robot[((((DateTime.now -  (17-i).minutes)-DateTime.new(2021,01,8,00, 27, 00))*24*60)-360).to_i]).to_i%>
@@ -352,4 +352,4 @@
       <% end %>
       </li>
     </ol>
-    
+    <% end %>

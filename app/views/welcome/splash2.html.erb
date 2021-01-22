@@ -1,0 +1,31 @@
+<%if session[:user_id] %>
+<% text = "SUCCESS" %>
+<% col = "#008000"%>
+ <meta HTTP-EQUIV="REFRESH" content="2; url=/stocks/<%=Company.first().id%>"> 
+<% else %>
+<% text = "FAILURE"%>
+<% col = "red" %>
+<meta HTTP-EQUIV="REFRESH" content="2; url=/"> 
+<% end %>
+<htmL>
+    <head>
+    
+    </head>
+    
+    <style>
+        .container {
+            margin:auto;
+            width:60%;
+          }
+          
+    </style>
+    
+    
+    
+    <body style="background-color: black;">
+    <div class="container">
+            <h1 style="color: <%=col%>"><%=text%></h1>
+    </div>
+    </body>
+    
+    </htmL>
