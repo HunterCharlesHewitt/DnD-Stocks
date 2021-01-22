@@ -10,7 +10,7 @@
 #
 # It's strongly recommended that you check this file into your version control system.
 
-ActiveRecord::Schema.define(version: 2021_01_21_173358) do
+ActiveRecord::Schema.define(version: 2021_01_22_154420) do
 
   create_table "companies", force: :cascade do |t|
     t.string "name"
@@ -24,15 +24,22 @@ ActiveRecord::Schema.define(version: 2021_01_21_173358) do
     t.datetime "updated_at", precision: 6, null: false
   end
 
-  create_table "users", force: :cascade do |t|
-    t.string "name"
-    t.text "wealth", default: "--- []\n"
-    t.text "minute_stocks", default: "--- []\n"
-    t.text "day_stocks", default: "--- []\n"
-    t.string "company_invested"
-    t.string "reh"
+  create_table "shares", force: :cascade do |t|
+    t.integer "company_id"
+    t.integer "user_id"
+    t.integer "buy_price"
+    t.integer "rob_hum_elf"
     t.datetime "created_at", precision: 6, null: false
     t.datetime "updated_at", precision: 6, null: false
+  end
+
+  create_table "users", force: :cascade do |t|
+    t.datetime "created_at", precision: 6, null: false
+    t.datetime "updated_at", precision: 6, null: false
+    t.integer "starting_wealth"
+    t.string "name"
+    t.string "uninvested_wealth"
+    t.index ["name"], name: "index_users_on_name", unique: true
   end
 
 end

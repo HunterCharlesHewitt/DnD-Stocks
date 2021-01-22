@@ -1,0 +1,355 @@
+<head>
+    <script src="https://www.amcharts.com/lib/3/amcharts.js?x"></script>
+    <script src="https://www.amcharts.com/lib/3/serial.js?x"></script>
+    <script src="https://www.amcharts.com/lib/3/themes/dark.js"></script>
+    <%=session[:user_id] = params[:id]%>
+  </head>
+    
+    <style>
+    body{
+        background-color: #161616;  
+      }
+    a{
+        visibility: hidden;
+    }
+    h1{
+        color:white;
+        margin-left: 0%;
+        width: 50%;
+    }
+    
+    p{
+        color:white;
+        margin-left: 0%;
+        width: 50%;
+        animation: fadeInAnimation ease 12s; 
+        animation-iteration-count: 1; 
+        animation-fill-mode: forwards; 
+    }
+    
+    .hide {
+        display: none;
+      }
+    .hover_hide:hover + .hide {
+        display: block;
+        color: red;
+      }
+    h2 { 
+        color:white;
+        margin-left: 0%;
+        width: 50%;
+        animation: fadeInAnimation ease 6s; 
+        animation-iteration-count: 1; 
+        animation-fill-mode: forwards; 
+    } 
+
+    h3 {
+      color:white;
+    }
+    @keyframes fadeInAnimation { 
+        0% { 
+            opacity: 0; 
+        } 
+        100% { 
+            opacity: 1; 
+        } 
+    } 
+      #chartdiv {	
+         width		: 100%;
+          height		: 500px;
+          background-color: #161616;  
+      }
+      
+      .amcharts-graph-human .amcharts-graph-stroke {
+        stroke-dasharray: 3px 3px;
+        stroke-linejoin: round;
+        stroke-linecap: round;
+        -webkit-animation: am-moving-dashes 1s linear infinite;
+        animation: am-moving-dashes 1s linear infinite;
+      }
+      
+      @-webkit-keyframes am-moving-dashes {
+        100% {
+          stroke-dashoffset: -31px;
+        }
+      }
+      @keyframes am-moving-dashes {
+        100% {
+          stroke-dashoffset: -31px;
+        }
+      }
+      
+      
+      .lastBullet {
+        -webkit-animation: am-pulsating 1s ease-out infinite;
+        animation: am-pulsating 1s ease-out infinite;
+      }
+      @-webkit-keyframes am-pulsating {
+        0% {
+          stroke-opacity: 1;
+          stroke-width: 0px;
+        }
+        100% {
+          stroke-opacity: 0;
+          stroke-width: 50px;
+        }
+      }
+      @keyframes am-pulsating {
+        0% {
+          stroke-opacity: 1;
+          stroke-width: 0px;
+        }
+        100% {
+          stroke-opacity: 0;
+          stroke-width: 50px;
+        }
+      }
+      
+      .amcharts-graph-column-front {
+        -webkit-transition: all .3s .3s ease-out;
+        transition: all .3s .3s ease-out;
+      }
+      .amcharts-graph-column-front:hover {
+        fill: #496375;
+        stroke: #496375;
+        -webkit-transition: all .3s ease-out;
+        transition: all .3s ease-out;
+      }
+      
+      .amcharts-graph-robot {
+        stroke-linejoin: round;
+        stroke-linecap: round;
+        stroke-dasharray: 500%;
+        stroke-dasharray: 0 \0/;    /* fixes IE prob */
+        stroke-dashoffset: 0 \0/;   /* fixes IE prob */
+        -webkit-animation: am-draw 40s;
+        animation: am-draw 40s;
+      }
+      @-webkit-keyframes am-draw {
+          0% {
+              stroke-dashoffset: 500%;
+          }
+          100% {
+              stroke-dashoffset: 0%;
+          }
+      }
+      @keyframes am-draw {
+          0% {
+              stroke-dashoffset: 500%;
+          }
+          100% {
+              stroke-dashoffset: 0%;
+          }
+      }
+    </style>
+    
+    <script>
+    
+        function getRandomInt(max) {
+            return Math.floor(Math.random() * Math.floor(max));
+        }
+    
+        function getNeg()
+        {
+            rand = Math.floor(Math.random() * Math.floor(2));
+            return rand == 0 ? 1 : -1
+        }
+    
+        function get_day(date_obj,num_days)
+        {
+            var day_num = 1000 * 60 * 60 * 24;
+            var ret_day = date_obj - (day_num*num_days);
+            ret_day = new Date(ret_day)
+            return String(ret_day.getFullYear()) + "-" + String(ret_day.getMonth()+1).padStart(2, '0') + "-" + String(ret_day.getDate()).padStart(2, '0')
+        }
+    
+        function getCookie(name) {
+            // Split cookie string and get all individual name=value pairs in an array
+            var cookieArr = document.cookie.split(";");
+            
+            // Loop through the array elements
+            for(var i = 0; i < cookieArr.length; i++) {
+                var cookiePair = cookieArr[i].split("=");
+                
+                /* Removing whitespace at the beginning of the cookie name
+                and compare it with the given string */
+                if(name == cookiePair[0].trim()) {
+                    // Decode the cookie value and return
+                    return decodeURIComponent(cookiePair[1]);
+                }
+            }
+            
+            // Return null if not found
+            return null;
+        }
+        
+        var date = new Date();
+        var yesterday = date - 1000 * 60 * 60 * 24 * 2;   // current date's milliseconds - 1,000 ms * 60 s * 60 mins * 24 hrs * (# of days beyond one to go back)
+        yesterday = new Date(yesterday);
+        console.log(get_day(yesterday,3));
+    
+        var human_trade = 80;
+        var robot_trade = 50;
+        var elf_trade = 30;
+    
+        var chartData = [
+        <% if Share.find_by(user_id: params[:id])%>
+        <% for i in 0..17 %> 
+        {
+            "date": get_day(date,<%=(17-i)%>),
+            "Robot": 
+            <% tot = User.find(params[:id]).starting_wealth%>
+            <% Share.where(user_id: params[:id]).each do |share|%>
+              <%if(share.rob_hum_elf == 0)%>
+                <%tot+= (Company.find(share.company_id).minute_stocks_robot[((((DateTime.now -  (17-i).minutes)-DateTime.new(2021,01,8,00, 27, 00))*24*60)-360).to_i]).to_i%>
+              <%elsif(share.rob_hum_elf == 1)%>
+                <%tot+= (Company.find(share.company_id).minute_stocks_human[((((DateTime.now -  (17-i).minutes)-DateTime.new(2021,01,8,00, 27, 00))*24*60)-360).to_i]).to_i%>
+              <%elsif(share.rob_hum_elf == 2)%>
+                <%tot+= (Company.find(share.company_id).minute_stocks_elf[((((DateTime.now -  (17-i).minutes)-DateTime.new(2021,01,8,00, 27, 00))*24*60)-360).to_i]).to_i%>
+              <%end%>
+            <%end%>
+            <%=tot%>
+            <%session[:total_gains] = tot%>
+        },
+        <% end %>
+        <% end %>
+    ];
+    var chart = AmCharts.makeChart("chartdiv", {
+      type: "serial",
+      theme: "dark",
+      dataDateFormat: "YYYY-MM-DD",
+      dataProvider: chartData,
+    
+      addClassNames: true,
+      startRobot: 1,
+      color: "#FFFFFF",
+      marginLeft: 0,
+    
+      categoryField: "date",
+      categoryAxis: {
+        parseDates: true,
+        minPeriod: "DD",
+        autoGridCount: false,
+        gridCount: 50,
+        gridAlpha: 0.1,
+        gridColor: "#FFFFFF",
+        axisColor: "#555555",
+        dateFormats: [{
+            period: 'DD',
+            format: 'DD'
+        }, {
+            period: 'WW',
+            format: 'MMM DD'
+        }, {
+            period: 'MM',
+            format: 'MMM'
+        }, {
+            period: 'YYYY',
+            format: 'YYYY'
+        }]
+      },
+    
+      valueAxes: [{
+        id: "a1",
+        title: "Copper Pieces",
+        gridAlpha: 0,
+        axisAlpha: 0
+      }],
+      graphs: [{
+          id: "robot",
+          title: "<%=User.find(params[:id]).name%>: ",
+          valueField: "Robot",
+          type: "line",
+          valueAxis: "a3",
+          lineColor: "#ff5755",
+          balloonText: "[[value]] CP",
+          lineThickness: 1,
+          legendValueText: "[[value]]",
+          bullet: "square",
+          bulletBorderColor: "#ff5755",
+          bulletBorderThickness: 1,
+          bulletBorderAlpha: 1,
+          dashLengthField: "dashLength",
+          animationPlayed: true
+        }],
+    
+      chartCursor: {
+        zoomable: false,
+        categoryBalloonDateFormat: "DD",
+        cursorAlpha: 0,
+        valueBalloonsEnabled: false
+      },
+      legend: {
+        bulletType: "round",
+        equalWidths: false,
+        valueWidth: 120,
+        useGraphSettings: true,
+        color: "#FFFFFF"
+      }
+    });
+    
+  
+    </script>
+    
+    
+    <br>
+    <h1>Zail Stock Exchange: <%=User.find(params[:id]).name%>'s Portfolio </h1>
+    <div style="float:left;margin-right:10px">
+    <form action="/user/<%=params[:id]%>">
+      <button>Switch to Monthly Portfolio View</button>
+    </form>
+    </div>
+    <form action="/stocks/<%=Company.first().id%>">
+      <button>Switch back to Market View</button>
+    </form>
+    <br>
+    <div id="chartdiv"></div>	
+    <% prof = 0 %>
+    <% tota = 0 %>
+    <% Share.where(user_id: params[:id]).each do |share|%>
+        <%if share.rob_hum_elf == 0%>
+        <% curr_price = (Company.find(share.company_id).minute_stocks_robot[((((DateTime.now -  (0).minutes)-DateTime.new(2021,01,8,00, 27, 00))*24*60)-360).to_i]).to_i%>
+        <% elsif share.rob_hum_elf == 1 %>
+        <% curr_price = (Company.find(share.company_id).minute_stocks_human[((((DateTime.now -  (0).minutes)-DateTime.new(2021,01,8,00, 27, 00))*24*60)-360).to_i]).to_i%>
+        <%else %>
+        <% curr_price = (Company.find(share.company_id).minute_stocks_elf[((((DateTime.now -  (0).minutes)-DateTime.new(2021,01,8,00, 27, 00))*24*60)-360).to_i]).to_i%>
+        <% end %>
+        <%prof += (curr_price - share.buy_price)%>
+        <% tota += curr_price %> 
+    <% end %>
+
+    <h3>Current Invested Wealth: <%=tota %> CP</h3>
+    <h3>Current Uninvested Wealth: <%=User.find(params[:id]).uninvested_wealth %> CP</h3>
+
+    <h3>Total Gains: <%=(tota + User.find(params[:id]).uninvested_wealth.to_i) - User.find(params[:id]).starting_wealth.to_i %> CP</h3>
+    <br>
+    <h1>Investments</h1>
+    <ol style="color:white">
+      <li><% Share.where(user_id: params[:id]).each do |share|%>
+        Company Name: <%= Company.find(share.company_id).name %> <br>
+        <%if share.rob_hum_elf == 0%>
+        <% curr_price = (Company.find(share.company_id).minute_stocks_robot[((((DateTime.now -  (0).minutes)-DateTime.new(2021,01,8,00, 27, 00))*24*60)-360).to_i]).to_i%>
+        Robot
+        <% elsif share.rob_hum_elf == 1 %>
+        <% curr_price = (Company.find(share.company_id).minute_stocks_human[((((DateTime.now -  (0).minutes)-DateTime.new(2021,01,8,00, 27, 00))*24*60)-360).to_i]).to_i%>
+        Human
+        <%else %>
+        <% curr_price = (Company.find(share.company_id).minute_stocks_elf[((((DateTime.now -  (0).minutes)-DateTime.new(2021,01,8,00, 27, 00))*24*60)-360).to_i]).to_i%>
+        Elf
+        <% end %>
+        <br>
+        Date of Purchase: <%=share.created_at%>
+        <br>
+        Buy Price: <%=share.buy_price %> CP
+        <br>
+        Current Price: <%= curr_price %> CP
+        <br>
+        Profit: <%=curr_price - share.buy_price %> CP
+      
+        <form action= <%="/sell/#{share.id}"%>>
+            <button>Sell</button>
+        </form>
+      <% end %>
+      </li>
+    </ol>
+    
