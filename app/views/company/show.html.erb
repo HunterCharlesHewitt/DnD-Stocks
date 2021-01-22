@@ -2,7 +2,7 @@
     <script src="https://www.amcharts.com/lib/3/amcharts.js?x"></script>
     <script src="https://www.amcharts.com/lib/3/serial.js?x"></script>
     <script src="https://www.amcharts.com/lib/3/themes/dark.js"></script>
-    
+
 </head>
     
     <style>
@@ -60,24 +60,24 @@
         stroke-dasharray: 3px 3px;
         stroke-linejoin: round;
         stroke-linecap: round;
-        -webkit-animation: am-moving-dashes 1s linear infinite;
+        - webkit-animation: am-moving-dashes 1s linear infinite;
         animation: am-moving-dashes 1s linear infinite;
       }
       
       @-webkit-keyframes am-moving-dashes {
         100% {
-          stroke-dashoffset: -31px;
+          stroke-dashoffset: - 31px;
         }
       }
       @keyframes am-moving-dashes {
         100% {
-          stroke-dashoffset: -31px;
+          stroke-dashoffset: - 31px;
         }
       }
       
       
       .lastBullet {
-        -webkit-animation: am-pulsating 1s ease-out infinite;
+        - webkit-animation: am-pulsating 1s ease-out infinite;
         animation: am-pulsating 1s ease-out infinite;
       }
       @-webkit-keyframes am-pulsating {
@@ -102,13 +102,13 @@
       }
       
       .amcharts-graph-column-front {
-        -webkit-transition: all .3s .3s ease-out;
+        - webkit-transition: all .3s .3s ease-out;
         transition: all .3s .3s ease-out;
       }
       .amcharts-graph-column-front:hover {
         fill: #496375;
         stroke: #496375;
-        -webkit-transition: all .3s ease-out;
+        - webkit-transition: all .3s ease-out;
         transition: all .3s ease-out;
       }
       
@@ -118,7 +118,7 @@
         stroke-dasharray: 500%;
         stroke-dasharray: 0 \0/;    /* fixes IE prob */
         stroke-dashoffset: 0 \0/;   /* fixes IE prob */
-        -webkit-animation: am-draw 40s;
+        - webkit-animation: am-draw 40s;
         animation: am-draw 40s;
       }
       @-webkit-keyframes am-draw {
@@ -148,13 +148,13 @@
         function getNeg()
         {
             rand = Math.floor(Math.random() * Math.floor(2));
-            return rand == 0 ? 1 : -1
+            return rand == 0 ? 1 : -  1
         }
     
         function get_day(date_obj,num_days)
         {
             var day_num = 1000 * 60 * 60 * 24;
-            var ret_day = date_obj - (day_num*num_days);
+            var ret_day = date_obj -  (day_num*num_days);
             ret_day = new Date(ret_day)
             return String(ret_day.getFullYear()) + "-" + String(ret_day.getMonth()+1).padStart(2, '0') + "-" + String(ret_day.getDate()).padStart(2, '0')
         }
@@ -180,7 +180,7 @@
         }
         
         var date = new Date();
-        var yesterday = date - 1000 * 60 * 60 * 24 * 2;   // current date's milliseconds - 1,000 ms * 60 s * 60 mins * 24 hrs * (# of days beyond one to go back)
+        var yesterday = date -  1000 * 60 * 60 * 24 * 2;   // current date's milliseconds -  1,000 ms * 60 s * 60 mins * 24 hrs * (# of days beyond one to go back)
         yesterday = new Date(yesterday);
         console.log(get_day(yesterday,3));
     
@@ -191,92 +191,92 @@
         var chartData = [
         {
             "date": get_day(date,13),
-            "Elf": <%=Company.find(params[:id]).day_stocks_elf[(((((DateTime.now -13.minutes)-DateTime.new(2021,01,21, 22, 27, 00))*24*60)-360).to_i ]%>,
-            "Human": <%=Company.find(params[:id]).day_stocks_human[(((((DateTime.now -13.minutes)-DateTime.new(2021,01,21, 22, 27, 00))*24*60)-360).to_i ]%>,
-            "Robot": <%=Company.find(params[:id]).day_stocks_robot[(((((DateTime.now -13.minutes)-DateTime.new(2021,01,21, 22, 27, 00))*24*60)-360).to_i ]%>,
+            "Elf": <%=Company.find(params[:id]).minute_stocks_elf[((((DateTime.now -  13.minutes)-DateTime.new(2021,01,21, 22, 27, 00))*24*60)-360).to_i ]%>,
+            "Human": <%=Company.find(params[:id]).minute_stocks_human[((((DateTime.now -  13.minutes)-DateTime.new(2021,01,21, 22, 27, 00))*24*60)-360).to_i ]%>,
+            "Robot": <%=Company.find(params[:id]).minute_stocks_robot[((((DateTime.now -  13.minutes)-DateTime.new(2021,01,21, 22, 27, 00))*24*60)-360).to_i ]%>,
         },
         {
             "date": get_day(date,12),
-            "Elf": <%=Company.find(params[:id]).day_stocks_elf[(((((DateTime.now -12.minutes)-DateTime.new(2021,01,21, 22, 27, 00))*24*60)-360).to_i ]%>,
-            "Human": <%=Company.find(params[:id]).day_stocks_human[(((((DateTime.now -12.minutes)-DateTime.new(2021,01,21, 22, 27, 00))*24*60)-360).to_i ]%>,
-            "Robot": <%=Company.find(params[:id]).day_stocks_robot[(((((DateTime.now -12.minutes)-DateTime.new(2021,01,21, 22, 27, 00))*24*60)-360).to_i ]%>,
+            "Elf": <%=Company.find(params[:id]).minute_stocks_elf[((((DateTime.now -  12.minutes)-DateTime.new(2021,01,21, 22, 27, 00))*24*60)-360).to_i ]%>,
+            "Human": <%=Company.find(params[:id]).minute_stocks_human[((((DateTime.now -  12.minutes)-DateTime.new(2021,01,21, 22, 27, 00))*24*60)-360).to_i ]%>,
+            "Robot": <%=Company.find(params[:id]).minute_stocks_robot[((((DateTime.now -  12.minutes)-DateTime.new(2021,01,21, 22, 27, 00))*24*60)-360).to_i ]%>,
         },
         {
             "date": get_day(date,11),
-            "Elf": <%=Company.find(params[:id]).day_stocks_elf[(((((DateTime.now -11.minutes)-DateTime.new(2021,01,21, 22, 27, 00))*24*60)-360).to_i ]%>,
-            "Human": <%=Company.find(params[:id]).day_stocks_human[(((((DateTime.now -11.minutes)-DateTime.new(2021,01,21, 22, 27, 00))*24*60)-360).to_i ]%>,
-            "Robot": <%=Company.find(params[:id]).day_stocks_robot[(((((DateTime.now -11.minutes)-DateTime.new(2021,01,21, 22, 27, 00))*24*60)-360).to_i ]%>,
+            "Elf": <%=Company.find(params[:id]).minute_stocks_elf[((((DateTime.now -  11.minutes)-DateTime.new(2021,01,21, 22, 27, 00))*24*60)-360).to_i ]%>,
+            "Human": <%=Company.find(params[:id]).minute_stocks_human[((((DateTime.now -  11.minutes)-DateTime.new(2021,01,21, 22, 27, 00))*24*60)-360).to_i ]%>,
+            "Robot": <%=Company.find(params[:id]).minute_stocks_robot[((((DateTime.now -  11.minutes)-DateTime.new(2021,01,21, 22, 27, 00))*24*60)-360).to_i ]%>,
         },
         {
             "date": get_day(date,10),
-            "Elf": <%=Company.find(params[:id]).day_stocks_elf[(((((DateTime.now -10.minutes)-DateTime.new(2021,01,21, 22, 27, 00))*24*60)-360).to_i ]%>,
-            "Human": <%=Company.find(params[:id]).day_stocks_human[(((((DateTime.now -10.minutes)-DateTime.new(2021,01,21, 22, 27, 00))*24*60)-360).to_i ]%>,
-            "Robot": <%=Company.find(params[:id]).day_stocks_robot[(((((DateTime.now -10.minutes)-DateTime.new(2021,01,21, 22, 27, 00))*24*60)-360).to_i ]%>,
+            "Elf": <%=Company.find(params[:id]).minute_stocks_elf[((((DateTime.now -  10.minutes)-DateTime.new(2021,01,21, 22, 27, 00))*24*60)-360).to_i ]%>,
+            "Human": <%=Company.find(params[:id]).minute_stocks_human[((((DateTime.now -  10.minutes)-DateTime.new(2021,01,21, 22, 27, 00))*24*60)-360).to_i ]%>,
+            "Robot": <%=Company.find(params[:id]).minute_stocks_robot[((((DateTime.now -  10.minutes)-DateTime.new(2021,01,21, 22, 27, 00))*24*60)-360).to_i ]%>,
         },
         {
             "date": get_day(date,9),
-            "Elf": <%=Company.find(params[:id]).day_stocks_elf[(((((DateTime.now -9.minutes)-DateTime.new(2021,01,21, 22, 27, 00))*24*60)-360).to_i ]%>,
-            "Human": <%=Company.find(params[:id]).day_stocks_human[(((((DateTime.now -9.minutes)-DateTime.new(2021,01,21, 22, 27, 00))*24*60)-360).to_i ]%>,
-            "Robot": <%=Company.find(params[:id]).day_stocks_robot[(((((DateTime.now -9.minutes)-DateTime.new(2021,01,21, 22, 27, 00))*24*60)-360).to_i ]%>,
+            "Elf": <%=Company.find(params[:id]).minute_stocks_elf[((((DateTime.now - 9.minutes)-DateTime.new(2021,01,21, 22, 27, 00))*24*60)-360).to_i ]%>,
+            "Human": <%=Company.find(params[:id]).minute_stocks_human[((((DateTime.now - 9.minutes)-DateTime.new(2021,01,21, 22, 27, 00))*24*60)-360).to_i ]%>,
+            "Robot": <%=Company.find(params[:id]).minute_stocks_robot[((((DateTime.now - 9.minutes)-DateTime.new(2021,01,21, 22, 27, 00))*24*60)-360).to_i ]%>,
         },
         {
             "date": get_day(date,8),
-            "Elf": <%=Company.find(params[:id]).day_stocks_elf[(((((DateTime.now -8.minutes)-DateTime.new(2021,01,21, 22, 27, 00))*24*60)-360).to_i ]%>,
-            "Human": <%=Company.find(params[:id]).day_stocks_human[(((((DateTime.now -8.minutes)-DateTime.new(2021,01,21, 22, 27, 00))*24*60)-360).to_i ]%>,
-            "Robot": <%=Company.find(params[:id]).day_stocks_robot[(((((DateTime.now -8.minutes)-DateTime.new(2021,01,21, 22, 27, 00))*24*60)-360).to_i ]%>,
+            "Elf": <%=Company.find(params[:id]).minute_stocks_elf[((((DateTime.now - 8.minutes)-DateTime.new(2021,01,21, 22, 27, 00))*24*60)-360).to_i ]%>,
+            "Human": <%=Company.find(params[:id]).minute_stocks_human[((((DateTime.now - 8.minutes)-DateTime.new(2021,01,21, 22, 27, 00))*24*60)-360).to_i ]%>,
+            "Robot": <%=Company.find(params[:id]).minute_stocks_robot[((((DateTime.now - 8.minutes)-DateTime.new(2021,01,21, 22, 27, 00))*24*60)-360).to_i ]%>,
         },
         {
             "date": get_day(date,7),
-            "Elf": <%=Company.find(params[:id]).day_stocks_elf[(((((DateTime.now -7.minutes)-DateTime.new(2021,01,21, 22, 27, 00))*24*60)-360).to_i ]%>,
-            "Human": <%=Company.find(params[:id]).day_stocks_human[(((((DateTime.now -7.minutes)-DateTime.new(2021,01,21, 22, 27, 00))*24*60)-360).to_i ]%>,
-            "Robot": <%=Company.find(params[:id]).day_stocks_robot[(((((DateTime.now -7.minutes)-DateTime.new(2021,01,21, 22, 27, 00))*24*60)-360).to_i ]%>,
+            "Elf": <%=Company.find(params[:id]).minute_stocks_elf[((((DateTime.now - 7.minutes)-DateTime.new(2021,01,21, 22, 27, 00))*24*60)-360).to_i ]%>,
+            "Human": <%=Company.find(params[:id]).minute_stocks_human[((((DateTime.now - 7.minutes)-DateTime.new(2021,01,21, 22, 27, 00))*24*60)-360).to_i ]%>,
+            "Robot": <%=Company.find(params[:id]).minute_stocks_robot[((((DateTime.now - 7.minutes)-DateTime.new(2021,01,21, 22, 27, 00))*24*60)-360).to_i ]%>,
         },
         {
             "date": get_day(date,6),
-            "Elf": <%=Company.find(params[:id]).day_stocks_elf[(((((DateTime.now -6.minutes)-DateTime.new(2021,01,21, 22, 27, 00))*24*60)-360).to_i ]%>,
-            "Human": <%=Company.find(params[:id]).day_stocks_human[(((((DateTime.now -6.minutes)-DateTime.new(2021,01,21, 22, 27, 00))*24*60)-360).to_i ]%>,
-            "Robot": <%=Company.find(params[:id]).day_stocks_robot[(((((DateTime.now -6.minutes)-DateTime.new(2021,01,21, 22, 27, 00))*24*60)-360).to_i ]%>,
+            "Elf": <%=Company.find(params[:id]).minute_stocks_elf[((((DateTime.now - 6.minutes)-DateTime.new(2021,01,21, 22, 27, 00))*24*60)-360).to_i ]%>,
+            "Human": <%=Company.find(params[:id]).minute_stocks_human[((((DateTime.now - 6.minutes)-DateTime.new(2021,01,21, 22, 27, 00))*24*60)-360).to_i ]%>,
+            "Robot": <%=Company.find(params[:id]).minute_stocks_robot[((((DateTime.now - 6.minutes)-DateTime.new(2021,01,21, 22, 27, 00))*24*60)-360).to_i ]%>,
         },
         {
             "date": get_day(date,5),
-            "Elf": <%=Company.find(params[:id]).day_stocks_elf[(((((DateTime.now -5.minutes)-DateTime.new(2021,01,21, 22, 27, 00))*24*60)-360).to_i ]%>,
-            "Human": <%=Company.find(params[:id]).day_stocks_human[(((((DateTime.now -5.minutes)-DateTime.new(2021,01,21, 22, 27, 00))*24*60)-360).to_i ]%>,
-            "Robot": <%=Company.find(params[:id]).day_stocks_robot[(((((DateTime.now -5.minutes)-DateTime.new(2021,01,21, 22, 27, 00))*24*60)-360).to_i ]%>,
+            "Elf": <%=Company.find(params[:id]).minute_stocks_elf[((((DateTime.now - 5.minutes)-DateTime.new(2021,01,21, 22, 27, 00))*24*60)-360).to_i ]%>,
+            "Human": <%=Company.find(params[:id]).minute_stocks_human[((((DateTime.now - 5.minutes)-DateTime.new(2021,01,21, 22, 27, 00))*24*60)-360).to_i ]%>,
+            "Robot": <%=Company.find(params[:id]).minute_stocks_robot[((((DateTime.now - 5.minutes)-DateTime.new(2021,01,21, 22, 27, 00))*24*60)-360).to_i ]%>,
         },
         {
             "date": get_day(date,4),
-            "Elf": <%=Company.find(params[:id]).day_stocks_elf[(((((DateTime.now -4.minutes)-DateTime.new(2021,01,21, 22, 27, 00))*24*60)-360).to_i ]%>,
-            "Human": <%=Company.find(params[:id]).day_stocks_human[(((((DateTime.now -4.minutes)-DateTime.new(2021,01,21, 22, 27, 00))*24*60)-360).to_i ]%>,
-            "Robot": <%=Company.find(params[:id]).day_stocks_robot[(((((DateTime.now -4.minutes)-DateTime.new(2021,01,21, 22, 27, 00))*24*60)-360).to_i ]%>,
+            "Elf": <%=Company.find(params[:id]).minute_stocks_elf[((((DateTime.now - 4.minutes)-DateTime.new(2021,01,21, 22, 27, 00))*24*60)-360).to_i ]%>,
+            "Human": <%=Company.find(params[:id]).minute_stocks_human[((((DateTime.now - 4.minutes)-DateTime.new(2021,01,21, 22, 27, 00))*24*60)-360).to_i ]%>,
+            "Robot": <%=Company.find(params[:id]).minute_stocks_robot[((((DateTime.now - 4.minutes)-DateTime.new(2021,01,21, 22, 27, 00))*24*60)-360).to_i ]%>,
         },
         {
             "date": get_day(date,3),
-            "Elf": <%=Company.find(params[:id]).day_stocks_elf[(((((DateTime.now -3.minutes)-DateTime.new(2021,01,21, 22, 27, 00))*24*60)-360).to_i ]%>,
-            "Human": <%=Company.find(params[:id]).day_stocks_human[(((((DateTime.now -3.minutes)-DateTime.new(2021,01,21, 22, 27, 00))*24*60)-360).to_i ]%>,
-            "Robot": <%=Company.find(params[:id]).day_stocks_robot[(((((DateTime.now -3.minutes)-DateTime.new(2021,01,21, 22, 27, 00))*24*60)-360).to_i ]%>,
+            "Elf": <%=Company.find(params[:id]).minute_stocks_elf[((((DateTime.now - 3.minutes)-DateTime.new(2021,01,21, 22, 27, 00))*24*60)-360).to_i ]%>,
+            "Human": <%=Company.find(params[:id]).minute_stocks_human[((((DateTime.now - 3.minutes)-DateTime.new(2021,01,21, 22, 27, 00))*24*60)-360).to_i ]%>,
+            "Robot": <%=Company.find(params[:id]).minute_stocks_robot[((((DateTime.now - 3.minutes)-DateTime.new(2021,01,21, 22, 27, 00))*24*60)-360).to_i ]%>,
         },
         {
             "date": get_day(date,2),
-            "Elf": <%=Company.find(params[:id]).day_stocks_elf[(((((DateTime.now -2.minutes)-DateTime.new(2021,01,21, 22, 27, 00))*24*60)-360).to_i ]%>,
-            "Human": <%=Company.find(params[:id]).day_stocks_human[(((((DateTime.now -2.minutes)-DateTime.new(2021,01,21, 22, 27, 00))*24*60)-360).to_i ]%>,
-            "Robot": <%=Company.find(params[:id]).day_stocks_robot[(((((DateTime.now -2.minutes)-DateTime.new(2021,01,21, 22, 27, 00))*24*60)-360).to_i ]%>,
+            "Elf": <%=Company.find(params[:id]).minute_stocks_elf[((((DateTime.now - 2.minutes)-DateTime.new(2021,01,21, 22, 27, 00))*24*60)-360).to_i ]%>,
+            "Human": <%=Company.find(params[:id]).minute_stocks_human[((((DateTime.now - 2.minutes)-DateTime.new(2021,01,21, 22, 27, 00))*24*60)-360).to_i ]%>,
+            "Robot": <%=Company.find(params[:id]).minute_stocks_robot[((((DateTime.now - 2.minutes)-DateTime.new(2021,01,21, 22, 27, 00))*24*60)-360).to_i ]%>,
         },
         {
             "date": get_day(date,1),
-            "Elf": <%=Company.find(params[:id]).day_stocks_elf[(((((DateTime.now -1.minutes)-DateTime.new(2021,01,21, 22, 27, 00))*24*60)-360).to_i ]%>,
-            "Robot": <%=Company.find(params[:id]).day_stocks_robot[(((((DateTime.now -1.minutes)-DateTime.new(2021,01,21, 22, 27, 00))*24*60)-360).to_i ]%>,
-            "Human": <%=Company.find(params[:id]).day_stocks_human[(((((DateTime.now -1.minutes)-DateTime.new(2021,01,21, 22, 27, 00))*24*60)-360).to_i ]%>,
+            "Elf": <%=Company.find(params[:id]).minute_stocks_elf[((((DateTime.now -  1.minutes)-DateTime.new(2021,01,21, 22, 27, 00))*24*60)-360).to_i ]%>,
+            "Robot": <%=Company.find(params[:id]).minute_stocks_robot[((((DateTime.now -  1.minutes)-DateTime.new(2021,01,21, 22, 27, 00))*24*60)-360).to_i ]%>,
+            "Human": <%=Company.find(params[:id]).minute_stocks_human[((((DateTime.now -  1.minutes)-DateTime.new(2021,01,21, 22, 27, 00))*24*60)-360).to_i ]%>,
             "alpha":0.4
         },
         {
             "date": get_day(date,0),
-            "Elf":<%=Company.find(params[:id]).day_stocks_elf[(((((DateTime.now -0.minutes)-DateTime.new(2021,01,21, 22, 27, 00))*24*60)-360).to_i ]%>,
-            "Human": <%=Company.find(params[:id]).day_stocks_human[(((((DateTime.now -0.minutes)-DateTime.new(2021,01,21, 22, 27, 00))*24*60)-360).to_i ]%>,
-            "Robot": <%=Company.find(params[:id]).day_stocks_robot[(((((DateTime.now -0.minutes)-DateTime.new(2021,01,21, 22, 27, 00))*24*60)-360).to_i ]%>,
+            "Elf":<%=Company.find(params[:id]).minute_stocks_elf[((((DateTime.now - 0.minutes)-DateTime.new(2021,01,21, 22, 27, 00))*24*60)-360).to_i ]%>,
+            "Human": <%=Company.find(params[:id]).minute_stocks_human[((((DateTime.now - 0.minutes)-DateTime.new(2021,01,21, 22, 27, 00))*24*60)-360).to_i ]%>,
+            "Robot": <%=Company.find(params[:id]).minute_stocks_robot[((((DateTime.now - 0.minutes)-DateTime.new(2021,01,21, 22, 27, 00))*24*60)-360).to_i ]%>,
             "bulletClass": "lastBullet"
         },
         {
-            "date": get_day(date,-1)
+            "date": get_day(date,- 1)
         },
         {
             "date": get_day(date,-2)
