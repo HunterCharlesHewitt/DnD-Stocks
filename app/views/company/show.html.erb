@@ -192,105 +192,114 @@
     
         var chartData = [
         {
+          "date": get_day(date,17),
+          "Elf": <%=@company.minute_stocks_elf[((((DateTime.now -  17.minutes)-DateTime.new(2021,01,8,00, 27, 00))*24*60)-360).to_i ]%>,
+          "Human": <%=@company.minute_stocks_human[((((DateTime.now -  17.minutes)-DateTime.new(2021,01,8,00, 27, 00))*24*60)-360).to_i ]%>,
+          "Robot": <%=@company.minute_stocks_robot[((((DateTime.now -  17.minutes)-DateTime.new(2021,01,8,00, 27, 00))*24*60)-360).to_i ]%>,
+        },
+        {
+          "date": get_day(date,16),
+          "Elf": <%=@company.minute_stocks_elf[((((DateTime.now -  16.minutes)-DateTime.new(2021,01,8,00, 27, 00))*24*60)-360).to_i ]%>,
+          "Human": <%=@company.minute_stocks_human[((((DateTime.now -  16.minutes)-DateTime.new(2021,01,8,00, 27, 00))*24*60)-360).to_i ]%>,
+          "Robot": <%=@company.minute_stocks_robot[((((DateTime.now -  16.minutes)-DateTime.new(2021,01,8,00, 27, 00))*24*60)-360).to_i ]%>,
+        },
+        {
+          "date": get_day(date,15),
+          "Elf": <%=@company.minute_stocks_elf[((((DateTime.now -  15.minutes)-DateTime.new(2021,01,8,00, 27, 00))*24*60)-360).to_i ]%>,
+          "Human": <%=@company.minute_stocks_human[((((DateTime.now -  15.minutes)-DateTime.new(2021,01,8,00, 27, 00))*24*60)-360).to_i ]%>,
+          "Robot": <%=@company.minute_stocks_robot[((((DateTime.now -  15.minutes)-DateTime.new(2021,01,8,00, 27, 00))*24*60)-360).to_i ]%>,
+        },
+        {
+          "date": get_day(date,14),
+          "Elf": <%=@company.minute_stocks_elf[((((DateTime.now -  14.minutes)-DateTime.new(2021,01,8,00, 27, 00))*24*60)-360).to_i ]%>,
+          "Human": <%=@company.minute_stocks_human[((((DateTime.now -  14.minutes)-DateTime.new(2021,01,8,00, 27, 00))*24*60)-360).to_i ]%>,
+          "Robot": <%=@company.minute_stocks_robot[((((DateTime.now -  14.minutes)-DateTime.new(2021,01,8,00, 27, 00))*24*60)-360).to_i ]%>,
+        },
+        {
             "date": get_day(date,13),
-            "Elf": <%=@company.minute_stocks_elf[((((DateTime.now -  13.minutes)-DateTime.new(2021,01,21, 22, 27, 00))*24*60)-360).to_i ]%>,
-            "Human": <%=@company.minute_stocks_human[((((DateTime.now -  13.minutes)-DateTime.new(2021,01,21, 22, 27, 00))*24*60)-360).to_i ]%>,
-            "Robot": <%=@company.minute_stocks_robot[((((DateTime.now -  13.minutes)-DateTime.new(2021,01,21, 22, 27, 00))*24*60)-360).to_i ]%>,
+            "Elf": <%=@company.minute_stocks_elf[((((DateTime.now -  13.minutes)-DateTime.new(2021,01,8,00, 27, 00))*24*60)-360).to_i ]%>,
+            "Human": <%=@company.minute_stocks_human[((((DateTime.now -  13.minutes)-DateTime.new(2021,01,8,00, 27, 00))*24*60)-360).to_i ]%>,
+            "Robot": <%=@company.minute_stocks_robot[((((DateTime.now -  13.minutes)-DateTime.new(2021,01,8,00, 27, 00))*24*60)-360).to_i ]%>,
         },
         {
             "date": get_day(date,12),
-            "Elf": <%=@company.minute_stocks_elf[((((DateTime.now -  12.minutes)-DateTime.new(2021,01,21, 22, 27, 00))*24*60)-360).to_i ]%>,
-            "Human": <%=@company.minute_stocks_human[((((DateTime.now -  12.minutes)-DateTime.new(2021,01,21, 22, 27, 00))*24*60)-360).to_i ]%>,
-            "Robot": <%=@company.minute_stocks_robot[((((DateTime.now -  12.minutes)-DateTime.new(2021,01,21, 22, 27, 00))*24*60)-360).to_i ]%>,
+            "Elf": <%=@company.minute_stocks_elf[((((DateTime.now -  12.minutes)-DateTime.new(2021,01,8,00, 27, 00))*24*60)-360).to_i ]%>,
+            "Human": <%=@company.minute_stocks_human[((((DateTime.now -  12.minutes)-DateTime.new(2021,01,8,00, 27, 00))*24*60)-360).to_i ]%>,
+            "Robot": <%=@company.minute_stocks_robot[((((DateTime.now -  12.minutes)-DateTime.new(2021,01,8,00, 27, 00))*24*60)-360).to_i ]%>,
         },
         {
             "date": get_day(date,11),
-            "Elf": <%=@company.minute_stocks_elf[((((DateTime.now -  11.minutes)-DateTime.new(2021,01,21, 22, 27, 00))*24*60)-360).to_i ]%>,
-            "Human": <%=@company.minute_stocks_human[((((DateTime.now -  11.minutes)-DateTime.new(2021,01,21, 22, 27, 00))*24*60)-360).to_i ]%>,
-            "Robot": <%=@company.minute_stocks_robot[((((DateTime.now -  11.minutes)-DateTime.new(2021,01,21, 22, 27, 00))*24*60)-360).to_i ]%>,
+            "Elf": <%=@company.minute_stocks_elf[((((DateTime.now -  11.minutes)-DateTime.new(2021,01,8,00, 27, 00))*24*60)-360).to_i ]%>,
+            "Human": <%=@company.minute_stocks_human[((((DateTime.now -  11.minutes)-DateTime.new(2021,01,8,00, 27, 00))*24*60)-360).to_i ]%>,
+            "Robot": <%=@company.minute_stocks_robot[((((DateTime.now -  11.minutes)-DateTime.new(2021,01,8,00, 27, 00))*24*60)-360).to_i ]%>,
         },
         {
             "date": get_day(date,10),
-            "Elf": <%=@company.minute_stocks_elf[((((DateTime.now -  10.minutes)-DateTime.new(2021,01,21, 22, 27, 00))*24*60)-360).to_i ]%>,
-            "Human": <%=@company.minute_stocks_human[((((DateTime.now -  10.minutes)-DateTime.new(2021,01,21, 22, 27, 00))*24*60)-360).to_i ]%>,
-            "Robot": <%=@company.minute_stocks_robot[((((DateTime.now -  10.minutes)-DateTime.new(2021,01,21, 22, 27, 00))*24*60)-360).to_i ]%>,
+            "Elf": <%=@company.minute_stocks_elf[((((DateTime.now -  10.minutes)-DateTime.new(2021,01,8,00, 27, 00))*24*60)-360).to_i ]%>,
+            "Human": <%=@company.minute_stocks_human[((((DateTime.now -  10.minutes)-DateTime.new(2021,01,8,00, 27, 00))*24*60)-360).to_i ]%>,
+            "Robot": <%=@company.minute_stocks_robot[((((DateTime.now -  10.minutes)-DateTime.new(2021,01,8,00, 27, 00))*24*60)-360).to_i ]%>,
         },
         {
             "date": get_day(date,9),
-            "Elf": <%=@company.minute_stocks_elf[((((DateTime.now - 9.minutes)-DateTime.new(2021,01,21, 22, 27, 00))*24*60)-360).to_i ]%>,
-            "Human": <%=@company.minute_stocks_human[((((DateTime.now - 9.minutes)-DateTime.new(2021,01,21, 22, 27, 00))*24*60)-360).to_i ]%>,
-            "Robot": <%=@company.minute_stocks_robot[((((DateTime.now - 9.minutes)-DateTime.new(2021,01,21, 22, 27, 00))*24*60)-360).to_i ]%>,
+            "Elf": <%=@company.minute_stocks_elf[((((DateTime.now - 9.minutes)-DateTime.new(2021,01,8,00, 27, 00))*24*60)-360).to_i ]%>,
+            "Human": <%=@company.minute_stocks_human[((((DateTime.now - 9.minutes)-DateTime.new(2021,01,8,00, 27, 00))*24*60)-360).to_i ]%>,
+            "Robot": <%=@company.minute_stocks_robot[((((DateTime.now - 9.minutes)-DateTime.new(2021,01,8,00, 27, 00))*24*60)-360).to_i ]%>,
         },
         {
             "date": get_day(date,8),
-            "Elf": <%=@company.minute_stocks_elf[((((DateTime.now - 8.minutes)-DateTime.new(2021,01,21, 22, 27, 00))*24*60)-360).to_i ]%>,
-            "Human": <%=@company.minute_stocks_human[((((DateTime.now - 8.minutes)-DateTime.new(2021,01,21, 22, 27, 00))*24*60)-360).to_i ]%>,
-            "Robot": <%=@company.minute_stocks_robot[((((DateTime.now - 8.minutes)-DateTime.new(2021,01,21, 22, 27, 00))*24*60)-360).to_i ]%>,
+            "Elf": <%=@company.minute_stocks_elf[((((DateTime.now - 8.minutes)-DateTime.new(2021,01,8,00, 27, 00))*24*60)-360).to_i ]%>,
+            "Human": <%=@company.minute_stocks_human[((((DateTime.now - 8.minutes)-DateTime.new(2021,01,8,00, 27, 00))*24*60)-360).to_i ]%>,
+            "Robot": <%=@company.minute_stocks_robot[((((DateTime.now - 8.minutes)-DateTime.new(2021,01,8,00, 27, 00))*24*60)-360).to_i ]%>,
         },
         {
             "date": get_day(date,7),
-            "Elf": <%=@company.minute_stocks_elf[((((DateTime.now - 7.minutes)-DateTime.new(2021,01,21, 22, 27, 00))*24*60)-360).to_i ]%>,
-            "Human": <%=@company.minute_stocks_human[((((DateTime.now - 7.minutes)-DateTime.new(2021,01,21, 22, 27, 00))*24*60)-360).to_i ]%>,
-            "Robot": <%=@company.minute_stocks_robot[((((DateTime.now - 7.minutes)-DateTime.new(2021,01,21, 22, 27, 00))*24*60)-360).to_i ]%>,
+            "Elf": <%=@company.minute_stocks_elf[((((DateTime.now - 7.minutes)-DateTime.new(2021,01,8,00, 27, 00))*24*60)-360).to_i ]%>,
+            "Human": <%=@company.minute_stocks_human[((((DateTime.now - 7.minutes)-DateTime.new(2021,01,8,00, 27, 00))*24*60)-360).to_i ]%>,
+            "Robot": <%=@company.minute_stocks_robot[((((DateTime.now - 7.minutes)-DateTime.new(2021,01,8,00, 27, 00))*24*60)-360).to_i ]%>,
         },
         {
             "date": get_day(date,6),
-            "Elf": <%=@company.minute_stocks_elf[((((DateTime.now - 6.minutes)-DateTime.new(2021,01,21, 22, 27, 00))*24*60)-360).to_i ]%>,
-            "Human": <%=@company.minute_stocks_human[((((DateTime.now - 6.minutes)-DateTime.new(2021,01,21, 22, 27, 00))*24*60)-360).to_i ]%>,
-            "Robot": <%=@company.minute_stocks_robot[((((DateTime.now - 6.minutes)-DateTime.new(2021,01,21, 22, 27, 00))*24*60)-360).to_i ]%>,
+            "Elf": <%=@company.minute_stocks_elf[((((DateTime.now - 6.minutes)-DateTime.new(2021,01,8,00, 27, 00))*24*60)-360).to_i ]%>,
+            "Human": <%=@company.minute_stocks_human[((((DateTime.now - 6.minutes)-DateTime.new(2021,01,8,00, 27, 00))*24*60)-360).to_i ]%>,
+            "Robot": <%=@company.minute_stocks_robot[((((DateTime.now - 6.minutes)-DateTime.new(2021,01,8,00, 27, 00))*24*60)-360).to_i ]%>,
         },
         {
             "date": get_day(date,5),
-            "Elf": <%=@company.minute_stocks_elf[((((DateTime.now - 5.minutes)-DateTime.new(2021,01,21, 22, 27, 00))*24*60)-360).to_i ]%>,
-            "Human": <%=@company.minute_stocks_human[((((DateTime.now - 5.minutes)-DateTime.new(2021,01,21, 22, 27, 00))*24*60)-360).to_i ]%>,
-            "Robot": <%=@company.minute_stocks_robot[((((DateTime.now - 5.minutes)-DateTime.new(2021,01,21, 22, 27, 00))*24*60)-360).to_i ]%>,
+            "Elf": <%=@company.minute_stocks_elf[((((DateTime.now - 5.minutes)-DateTime.new(2021,01,8,00, 27, 00))*24*60)-360).to_i ]%>,
+            "Human": <%=@company.minute_stocks_human[((((DateTime.now - 5.minutes)-DateTime.new(2021,01,8,00, 27, 00))*24*60)-360).to_i ]%>,
+            "Robot": <%=@company.minute_stocks_robot[((((DateTime.now - 5.minutes)-DateTime.new(2021,01,8,00, 27, 00))*24*60)-360).to_i ]%>,
         },
         {
             "date": get_day(date,4),
-            "Elf": <%=@company.minute_stocks_elf[((((DateTime.now - 4.minutes)-DateTime.new(2021,01,21, 22, 27, 00))*24*60)-360).to_i ]%>,
-            "Human": <%=@company.minute_stocks_human[((((DateTime.now - 4.minutes)-DateTime.new(2021,01,21, 22, 27, 00))*24*60)-360).to_i ]%>,
-            "Robot": <%=@company.minute_stocks_robot[((((DateTime.now - 4.minutes)-DateTime.new(2021,01,21, 22, 27, 00))*24*60)-360).to_i ]%>,
+            "Elf": <%=@company.minute_stocks_elf[((((DateTime.now - 4.minutes)-DateTime.new(2021,01,8,00, 27, 00))*24*60)-360).to_i ]%>,
+            "Human": <%=@company.minute_stocks_human[((((DateTime.now - 4.minutes)-DateTime.new(2021,01,8,00, 27, 00))*24*60)-360).to_i ]%>,
+            "Robot": <%=@company.minute_stocks_robot[((((DateTime.now - 4.minutes)-DateTime.new(2021,01,8,00, 27, 00))*24*60)-360).to_i ]%>,
         },
         {
             "date": get_day(date,3),
-            "Elf": <%=@company.minute_stocks_elf[((((DateTime.now - 3.minutes)-DateTime.new(2021,01,21, 22, 27, 00))*24*60)-360).to_i ]%>,
-            "Human": <%=@company.minute_stocks_human[((((DateTime.now - 3.minutes)-DateTime.new(2021,01,21, 22, 27, 00))*24*60)-360).to_i ]%>,
-            "Robot": <%=@company.minute_stocks_robot[((((DateTime.now - 3.minutes)-DateTime.new(2021,01,21, 22, 27, 00))*24*60)-360).to_i ]%>,
+            "Elf": <%=@company.minute_stocks_elf[((((DateTime.now - 3.minutes)-DateTime.new(2021,01,8,00, 27, 00))*24*60)-360).to_i ]%>,
+            "Human": <%=@company.minute_stocks_human[((((DateTime.now - 3.minutes)-DateTime.new(2021,01,8,00, 27, 00))*24*60)-360).to_i ]%>,
+            "Robot": <%=@company.minute_stocks_robot[((((DateTime.now - 3.minutes)-DateTime.new(2021,01,8,00, 27, 00))*24*60)-360).to_i ]%>,
         },
         {
             "date": get_day(date,2),
-            "Elf": <%=@company.minute_stocks_elf[((((DateTime.now - 2.minutes)-DateTime.new(2021,01,21, 22, 27, 00))*24*60)-360).to_i ]%>,
-            "Human": <%=@company.minute_stocks_human[((((DateTime.now - 2.minutes)-DateTime.new(2021,01,21, 22, 27, 00))*24*60)-360).to_i ]%>,
-            "Robot": <%=@company.minute_stocks_robot[((((DateTime.now - 2.minutes)-DateTime.new(2021,01,21, 22, 27, 00))*24*60)-360).to_i ]%>,
+            "Elf": <%=@company.minute_stocks_elf[((((DateTime.now - 2.minutes)-DateTime.new(2021,01,8,00, 27, 00))*24*60)-360).to_i ]%>,
+            "Human": <%=@company.minute_stocks_human[((((DateTime.now - 2.minutes)-DateTime.new(2021,01,8,00, 27, 00))*24*60)-360).to_i ]%>,
+            "Robot": <%=@company.minute_stocks_robot[((((DateTime.now - 2.minutes)-DateTime.new(2021,01,8,00, 27, 00))*24*60)-360).to_i ]%>,
         },
         {
             "date": get_day(date,1),
-            "Elf": <%=@company.minute_stocks_elf[((((DateTime.now -  1.minutes)-DateTime.new(2021,01,21, 22, 27, 00))*24*60)-360).to_i ]%>,
-            "Robot": <%=@company.minute_stocks_robot[((((DateTime.now -  1.minutes)-DateTime.new(2021,01,21, 22, 27, 00))*24*60)-360).to_i ]%>,
-            "Human": <%=@company.minute_stocks_human[((((DateTime.now -  1.minutes)-DateTime.new(2021,01,21, 22, 27, 00))*24*60)-360).to_i ]%>,
+            "Elf": <%=@company.minute_stocks_elf[((((DateTime.now -  1.minutes)-DateTime.new(2021,01,8,00, 27, 00))*24*60)-360).to_i ]%>,
+            "Robot": <%=@company.minute_stocks_robot[((((DateTime.now -  1.minutes)-DateTime.new(2021,01,8,00, 27, 00))*24*60)-360).to_i ]%>,
+            "Human": <%=@company.minute_stocks_human[((((DateTime.now -  1.minutes)-DateTime.new(2021,01,8,00, 27, 00))*24*60)-360).to_i ]%>,
             "alpha":0.4
         },
         {
             "date": get_day(date,0),
-            "Elf":<%=@company.minute_stocks_elf[((((DateTime.now - 0.minutes)-DateTime.new(2021,01,21, 22, 27, 00))*24*60)-360).to_i ]%>,
-            "Human": <%=@company.minute_stocks_human[((((DateTime.now - 0.minutes)-DateTime.new(2021,01,21, 22, 27, 00))*24*60)-360).to_i ]%>,
-            "Robot": <%=@company.minute_stocks_robot[((((DateTime.now - 0.minutes)-DateTime.new(2021,01,21, 22, 27, 00))*24*60)-360).to_i ]%>,
+            "Elf":<%=@company.minute_stocks_elf[((((DateTime.now - 0.minutes)-DateTime.new(2021,01,8,00, 27, 00))*24*60)-360).to_i ]%>,
+            "Human": <%=@company.minute_stocks_human[((((DateTime.now - 0.minutes)-DateTime.new(2021,01,8,00, 27, 00))*24*60)-360).to_i ]%>,
+            "Robot": <%=@company.minute_stocks_robot[((((DateTime.now - 0.minutes)-DateTime.new(2021,01,8,00, 27, 00))*24*60)-360).to_i ]%>,
             "bulletClass": "lastBullet"
-        },
-        {
-            "date": get_day(date,- 1)
-        },
-        {
-            "date": get_day(date,-2)
-        },
-        {
-            "date": get_day(date,-3)
-        },
-        {
-            "date": get_day(date,-4)
-        },
-        {
-            "date": get_day(date,-5)
         }
     ];
     var chart = AmCharts.makeChart("chartdiv", {
