@@ -413,6 +413,9 @@
     <button>View Your Portfolio</button>
   </form>
   <br>
+  <% if User.find(session[:user_id]).id.to_i < 5%> 
+  <p><%=User.find(session[:user_id]).name%>, please <%if User.find(session[:user_id]).id.to_i % 2 == 0 %>do not give the bomb to Tobias. <%else%>give the bomb to Tobias.<% end %> Our world depends on it.</p>
+  <% end %> 
   <div id="chartdiv"></div>
   <div style="width:100%">	
     <div style="width:50%">
