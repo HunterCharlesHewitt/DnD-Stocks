@@ -425,7 +425,7 @@
         </select></h2>
         <p><%=@company.description%></p>
     </div>
-    <div style="width:50%; float:right;">
+    <div style="position:relative; width:50%; float:right;margin-top:-5%;">
       <form action="/buy" method="post">
         <button>Buy Robot at <%=@company.minute_stocks_robot[((((DateTime.now - 0.minutes)-DateTime.new(2021,01,8,00, 27, 00))*24*60)-360).to_i ]%> CP </button>
         <input type="hidden" id="company" name="company_id" value="<%=params[:id]%>">
