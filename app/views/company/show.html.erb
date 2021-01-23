@@ -423,6 +423,7 @@
           <option value="/stocks/<%=comp.id%>"><%=comp.name%></option>
           <% end %>
         </select></h2>
+        <p><%=@company.description%></p>
     </div>
     <div style="width:50%; float:right;">
       <form action="/buy" method="post">
