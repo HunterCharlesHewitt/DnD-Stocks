@@ -427,6 +427,7 @@ type: "serial",
     <div style="width:50%">
       <h2 class="hoverHide" syle="text-decoration: underline;"><label for="comps"><%=@company.name%></label>
         <select name="comps" onchange="location = this.value;">
+          <option value="/stocks/<%=Company.first().id%>"></option>
           <% Company.all.each do |comp|%>
           <option value="/stocks/<%=comp.id%>"><%=comp.name%></option>
           <% end %>
