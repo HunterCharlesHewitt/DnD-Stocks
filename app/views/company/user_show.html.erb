@@ -6,6 +6,14 @@
   </head>
     
     <style>
+      table, th,td {
+        border: 1px solid #51515a;
+        color:white
+        
+      }
+      th, td {
+        padding: 10px;
+      }
     body{
         background-color: #161616;  
       }
@@ -351,32 +359,50 @@
       <%=(tota + User.find(params[:id]).uninvested_wealth.to_i) - User.find(params[:id]).starting_wealth.to_i %> CP</span></h3>
     <br>
     <h1>Investments</h1>
-    <ol style="color:white">
-      <li><% Share.where(user_id: params[:id]).each do |share|%>
-        Company Name: <%= Company.find(share.company_id).name %> <br>
-        <%if share.rob_hum_elf == 0%>
-        <% curr_price = (Company.find(share.company_id).minute_stocks_robot[((((DateTime.now -  (0).minutes)-DateTime.new(2021,01,8,00, 27, 00))*24*60)-360).to_i]).to_i%>
-        Robot
-        <% elsif share.rob_hum_elf == 1 %>
-        <% curr_price = (Company.find(share.company_id).minute_stocks_human[((((DateTime.now -  (0).minutes)-DateTime.new(2021,01,8,00, 27, 00))*24*60)-360).to_i]).to_i%>
-        Human
-        <%else %>
-        <% curr_price = (Company.find(share.company_id).minute_stocks_elf[((((DateTime.now -  (0).minutes)-DateTime.new(2021,01,8,00, 27, 00))*24*60)-360).to_i]).to_i%>
-        Elf
-        <% end %>
-        <br>
-        Date of Purchase: <%=share.created_at%>
-        <br>
-        Buy Price: <%=share.buy_price %> CP
-        <br>
-        Current Price: <%= curr_price %> CP
-        <br>
-        <span style="color: <%if curr_price - share.buy_price > 0 %>#66ff00 <%else%>#ff5755<%end%>"> Profit: <%=curr_price - share.buy_price %>CP</span> 
-      
-        <form action= <%="/sell/#{share.id}"%>>
+    <table>
+      <tr style="font-size: large;">
+        <th>Company</th>
+        <th>Market</th>
+        <th>Date</th>
+        <th>Buy Price</th>
+        <th>Current Price</th>
+        <th>Profit</th>
+        <th></th>
+      </tr>
+      <tr></tr><tr></tr><tr></tr>
+      <% Share.where(user_id: params[:id]).each do |share|%>
+      <tr>
+        <td><%= Company.find(share.company_id).name %></td>
+        <td>
+          <%if share.rob_hum_elf == 0%>
+          <% curr_price = (Company.find(share.company_id).minute_stocks_robot[((((DateTime.now -  (0).minutes)-DateTime.new(2021,01,8,00, 27, 00))*24*60)-360).to_i]).to_i%>
+          Robot
+          <% elsif share.rob_hum_elf == 1 %>
+          <% curr_price = (Company.find(share.company_id).minute_stocks_human[((((DateTime.now -  (0).minutes)-DateTime.new(2021,01,8,00, 27, 00))*24*60)-360).to_i]).to_i%>
+          Human
+          <%else %>
+          <% curr_price = (Company.find(share.company_id).minute_stocks_elf[((((DateTime.now -  (0).minutes)-DateTime.new(2021,01,8,00, 27, 00))*24*60)-360).to_i]).to_i%>
+          Elf
+          <% end %>
+        </td>
+        <td>
+          <%=share.created_at.strftime("%m/%d/%Y")%>
+        </td>
+        <td>
+          <%=share.buy_price %> CP
+        </td>
+        <td>
+          Current Price: <%= curr_price %> CP
+        </td>
+        <td>
+          <span style="color: <%if curr_price - share.buy_price > 0 %>#66ff00 <%else%>#ff5755<%end%>"> Profit: <%=curr_price - share.buy_price %>CP</span> 
+        </td>
+        <td>
+          <form action= <%="/sell/#{share.id}"%>>
             <button>Sell</button>
-        </form>
-      <% end %>
-      </li>
-    </ol>
+          </form>
+        </td>
+      </tr>
+      <% end%> 
+    </table>
     <% end %>
