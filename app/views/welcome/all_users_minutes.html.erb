@@ -212,18 +212,18 @@ function get_hour(date_obj,num_days)
         <% is_in = 0 %>
         <% User.all.each do |user| %>
         <% if Share.find_by(user_id: user.id)%>
-        <% for i in 0..17 %> 
+        <% for i in 0..5 %> 
         {
-            "date": get_hour(date,<%=(17-i)%>),
+            "date": get_hour(date,<%=(5-i)%>),
             "<%=user.name%>": 
             <% tot = 0%>
             <% Share.where(user_id: user.id).each do |share|%>
               <%if(share.rob_hum_elf == 0)%>
-                <%tot+= (Company.find(share.company_id).minute_stocks_robot[((((DateTime.now -  (17-i).minutes)-DateTime.new(2021,01,8,00, 27, 00))*24*60)-360).to_i]).to_i%>
+                <%tot+= (Company.find(share.company_id).minute_stocks_robot[((((DateTime.now -  (5-i).minutes)-DateTime.new(2021,01,8,00, 27, 00))*24*60)-360).to_i]).to_i%>
               <%elsif(share.rob_hum_elf == 1)%>
-                <%tot+= (Company.find(share.company_id).minute_stocks_human[((((DateTime.now -  (17-i).minutes)-DateTime.new(2021,01,8,00, 27, 00))*24*60)-360).to_i]).to_i%>
+                <%tot+= (Company.find(share.company_id).minute_stocks_human[((((DateTime.now -  (5-i).minutes)-DateTime.new(2021,01,8,00, 27, 00))*24*60)-360).to_i]).to_i%>
               <%elsif(share.rob_hum_elf == 2)%>
-                <%tot+= (Company.find(share.company_id).minute_stocks_elf[((((DateTime.now -  (17-i).minutes)-DateTime.new(2021,01,8,00, 27, 00))*24*60)-360).to_i]).to_i%>
+                <%tot+= (Company.find(share.company_id).minute_stocks_elf[((((DateTime.now -  (5-i).minutes)-DateTime.new(2021,01,8,00, 27, 00))*24*60)-360).to_i]).to_i%>
               <%end%>
             <%end%>
             <%=tot%>
@@ -330,7 +330,7 @@ function get_hour(date_obj,num_days)
   <br>
   <h1>Zail Stock Exchange: Friends </h1>
   <div style="float:left;margin-right:10px">
-    <form action="/stocks/<%=Company.first()%>">
+    <form action="/stocks/<%=Company.first().id%>">
       <button type="submit">Switch to Market View</button>
     </form>
   </div>

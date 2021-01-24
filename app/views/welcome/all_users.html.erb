@@ -455,7 +455,7 @@
   <br>
   <h1>Zail Stock Exchange: Friends </h1>
   <div style="float:left;margin-right:10px">
-    <form action="/stocks/<%=Company.first()%>">
+    <form action="/stocks/<%=Company.first().id%>">
       <button type="submit">Switch to Market View</button>
     </form>
   </div>
@@ -464,8 +464,8 @@
       <button>View Your Portfolio</button>
     </form>
   </div>
-  <form action="/all_users_minutes">
+  <!-- <form action="/all_users_minutes">
     <button>Switch to All Users Minutes View</button>
-  </form>
+  </form> -->
   <br>
   <div id="chartdiv"></div>

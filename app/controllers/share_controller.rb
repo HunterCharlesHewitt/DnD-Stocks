@@ -29,4 +29,40 @@ class ShareController < ApplicationController
         @share.destroy()
         redirect_back fallback_location: root_path
     end
+
+    def boom
+        Share.all.each do |share|
+            comp = Company.find(share.company_id);
+            new_rob = Marshal.load(Marshal.dump(comp.minute_stocks_robot)) 
+            new_hum = Marshal.load(Marshal.dump(comp.minute_stocks_human)) 
+            new_elf = Marshal.load(Marshal.dump(comp.minute_stocks_elf)) 
+        
+            new_rob2 = Marshal.load(Marshal.dump(comp.day_stocks_robot)) 
+            new_hum2 = Marshal.load(Marshal.dump(comp.day_stocks_human)) 
+            new_elf2 = Marshal.load(Marshal.dump(comp.day_stocks_elf)) 
+            for i in 23662..25702
+                if(share.rob_hum_elf == 0)
+                    new_rob[i] = (new_rob[i-1].to_i + 1 + rand(50)).to_s;
+                elsif (share.rob_hum_elf == 1)
+                    new_hum[i] = (new_hum[i-1].to_i + 1 + rand(40)).to_s;
+                else
+                    new_elf[i] = (new_elf[i-1].to_i + 1 + rand(30)).to_s;
+                end  
+            end     
+            
+            new_rob2[16] = new_rob[24445];
+            new_hum2[16] = new_hum[24445];
+            new_elf2[16] = new_elf[24445];
+        
+            comp.update_attribute(:minute_stocks_robot,new_rob);
+            comp.update_attribute(:minute_stocks_elf,new_elf) ;
+            comp.update_attribute(:minute_stocks_human,new_hum); 
+            comp.update_attribute(:day_stocks_elf,new_elf2) ;
+            comp.update_attribute(:day_stocks_human,new_hum2)  
+            comp.update_attribute(:day_stocks_robot,new_rob2) ;
+
+            
+        end 
+        redirect_to "/stocks/#{Company.first.id}"
+    end
 end
