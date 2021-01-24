@@ -377,7 +377,7 @@
           <%= curr_price %> CP
         </td>
         <td>
-          <span style="color: <%if curr_price - share.buy_price > 0 %>#66ff00 <%else%>#ff5755<%end%>"> Profit: <%=curr_price - share.buy_price %>CP</span> 
+          <span style="color: <%if curr_price - share.buy_price > 0 %>#66ff00 <%else%>#ff5755<%end%>"> <%=curr_price - share.buy_price %>CP</span> 
         </td>
         <td>
           <form action= <%="/sell/#{share.id}"%>>
