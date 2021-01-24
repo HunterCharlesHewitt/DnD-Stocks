@@ -403,7 +403,7 @@
         gridAlpha: 0,
         axisAlpha: 0
       }],
-      graphs: [<% User.all.each do |user| %>{
+      graphs: [<% User.all.each do |user| %><% if Share.find_by(user_id: user.id)%>{
         id: "<%=user.name%>",
         title: "<%=user.name%>: ",
         valueField: "<%=user.name%>",
@@ -434,7 +434,7 @@
         bulletBorderAlpha: 1,
         dashLengthField: "dashLength",
         animationPlayed: true
-      },<%end%>],
+      },<%end%><%end%>],
   
     
       chartCursor: {
