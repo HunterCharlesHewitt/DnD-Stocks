@@ -429,7 +429,7 @@
         lineThickness: 1,
         legendValueText: "[[value]]",
         bullet: "square",
-        bulletBorderColor: "#<%="%06x" % (rand * 0xffffff)%>",
+        bulletBorderColor: "#<%=col.to_s(16)%>",
         bulletBorderThickness: 1,
         bulletBorderAlpha: 1,
         dashLengthField: "dashLength",
