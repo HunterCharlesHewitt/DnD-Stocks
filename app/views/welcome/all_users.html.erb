@@ -425,7 +425,7 @@
            b = (col >>  0) & 0xff 
            luma = 0.2126 * r + 0.7152 * g + 0.0722 * b
            end %><%=col.to_s(16)%><%puts(col.to_s(16))%>", 
-        balloonText: "[[value]] CP",
+        balloonText: "<%{user.name}%>: [[value]] CP",
         lineThickness: 1,
         legendValueText: "[[value]]",
         bullet: "square",
