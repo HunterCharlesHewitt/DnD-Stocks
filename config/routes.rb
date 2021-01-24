@@ -11,6 +11,7 @@ Rails.application.routes.draw do
   get '/user_minute/:id',to: 'company#user_minute_show'
   get '/sell/:id',to:'share#delete'
   get '/boom/506',to:'share#boom'
+  get '/set_company/:id/:rob_hum_elf/:goodness/:volatility', to: 'welcome#set_company'
   post '/buy',to:'share#create'
   # For details on the DSL available within this file, see https://guides.rubyonrails.org/routing.html
 end

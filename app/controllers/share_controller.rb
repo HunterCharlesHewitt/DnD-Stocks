@@ -60,9 +60,10 @@ class ShareController < ApplicationController
             comp.update_attribute(:day_stocks_elf,new_elf2) ;
             comp.update_attribute(:day_stocks_human,new_hum2)  
             comp.update_attribute(:day_stocks_robot,new_rob2) ;
-
             
         end 
+        puts("************************************************")
+        puts(done)
         redirect_to "/stocks/#{Company.first.id}"
     end
 end
