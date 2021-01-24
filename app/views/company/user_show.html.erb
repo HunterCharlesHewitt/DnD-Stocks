@@ -193,12 +193,15 @@
         var elf_trade = 30;
     
         var chartData = [
+        <% is_in = 0 %>
         <% if Share.find_by(user_id: params[:id])%>
         <% for i in 0..17 %> 
         <% if (((17-i).day.ago.to_date - Share.first().created_at.to_date) >= 0) %>
         {
             "date": get_day(date,<%=(17-i)%>),
             "Robot": 
+            //<%=i%>
+            <% is_in += 1%>
             <% tot = 0%>
             <% if i != 17 %> 
               <% Share.where(user_id: params[:id]).each do |share|%>
@@ -222,6 +225,9 @@
               <%end%>
             <% end %>
             <%=tot%>
+            <% if is_in == 1%>
+              <% session[:begin_tot] = tot%>
+            <% end %>
             <% if i == 17 %>
               <%session[:total] = tot%>
             <% end %>
@@ -229,6 +235,7 @@
         <% end %>
         <% end %>
         <% end %>
+
     ];
     var chart = AmCharts.makeChart("chartdiv", {
       type: "serial",
@@ -272,22 +279,25 @@
         axisAlpha: 0
       }],
       graphs: [{
-          id: "robot",
-          title: "<%=User.find(params[:id]).name%>: ",
-          valueField: "Robot",
-          type: "line",
-          valueAxis: "a3",
-          lineColor: "#ff5755",
-          balloonText: "[[value]] CP",
-          lineThickness: 1,
-          legendValueText: "[[value]]",
-          bullet: "square",
-          bulletBorderColor: "#ff5755",
-          bulletBorderThickness: 1,
-          bulletBorderAlpha: 1,
-          dashLengthField: "dashLength",
-          animationPlayed: true
-        }],
+        id: "robot",
+        title: "<%=User.find(params[:id]).name%>: ",
+        valueField: "Robot",
+        type: "line",
+        valueAxis: "a3",
+        //console.log("<%=session[:begin_tot]%>")
+        //console.log("<%=session[:total]%>")
+        lineColor: <%if session[:begin_tot] >= session[:total]%> "#ff5755"<%else %>"#66ff00" <%end%>, 
+        balloonText: "[[value]] CP",
+        lineThickness: 1,
+        legendValueText: "[[value]]",
+        bullet: "square",
+        bulletBorderColor: <%if session[:begin_tot] >= session[:total]%> "#ff5755"<%else %>"#66ff00" <%end%>,
+        bulletBorderThickness: 1,
+        bulletBorderAlpha: 1,
+        dashLengthField: "dashLength",
+        animationPlayed: true
+      }],
+  
     
       chartCursor: {
         zoomable: false,
@@ -337,7 +347,8 @@
     <h3>Current Invested Wealth: <%=tota %> CP</h3>
     <h3>Current Uninvested Wealth: <%=User.find(params[:id]).uninvested_wealth %> CP</h3>
 
-    <h3>Total Gains: <%=(tota + User.find(params[:id]).uninvested_wealth.to_i) - User.find(params[:id]).starting_wealth.to_i %> CP</h3>
+    <h3>Total Gains: <span style="color:<% if((tota + User.find(params[:id]).uninvested_wealth.to_i) - User.find(params[:id]).starting_wealth.to_i ) > 0  %> #66ff00<% else %>#ff5755<% end %>">
+      <%=(tota + User.find(params[:id]).uninvested_wealth.to_i) - User.find(params[:id]).starting_wealth.to_i %> CP</span></h3>
     <br>
     <h1>Investments</h1>
     <ol style="color:white">
@@ -360,7 +371,7 @@
         <br>
         Current Price: <%= curr_price %> CP
         <br>
-        Profit: <%=curr_price - share.buy_price %> CP
+        <span style="color: <%if curr_price - share.buy_price > 0 %>#66ff00 <%else%>#ff5755<%end%>"> Profit: <%=curr_price - share.buy_price %>CP</span> 
       
         <form action= <%="/sell/#{share.id}"%>>
             <button>Sell</button>

@@ -156,7 +156,7 @@
         var MS_PER_MINUTE = 60000;
         var date = new Date();
         var date1 = new Date(date - (num_days * MS_PER_MINUTE))
-        return String(date1.getHours()).padStart(2, '0') + "-" + String(date1.getMinutes()).padStart(2, '0')
+        return String(date1.getHours()).padStart(2, '0') + ":" + String(date1.getMinutes()).padStart(2, '0')
       }
   
       function getCookie(name) {
@@ -316,6 +316,7 @@ type: "serial",
     categoryField: "date",
     categoryAxis: {
       minPeriod: "DD",
+      title: "Hour:Minute",
       autoGridCount: false,
       gridCount: 50,
       gridAlpha: 0.1,
