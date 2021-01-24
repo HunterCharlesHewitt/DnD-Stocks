@@ -1,6 +1,7 @@
 Rails.application.routes.draw do
   root 'welcome#splash'
   get '/scan',to: 'welcome#index'
+  get '/all_users_minutes',to:'welcome#all_users_minutes'
   get '/all_users',to:'welcome#all_users'
   get '/splash2',to: 'welcome#splash2'
   post '/login', to:'welcome#create_session'

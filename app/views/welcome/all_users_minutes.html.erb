@@ -198,165 +198,40 @@
     
         var human_trade = 80;
         var robot_trade = 50;
-        var elf_trade = 30;
+        var elf_trade = 30; 
 
-        const CSS_COLOR_NAMES = [
-  "AliceBlue",
-  "AntiqueWhite",
-  "Aqua",
-  "Aquamarine",
-  "Azure",
-  "Beige",
-  "Bisque",
-  "BlanchedAlmond",
-  "Blue",
-  "BlueViolet",
-  "Brown",
-  "BurlyWood",
-  "CadetBlue",
-  "Chartreuse",
-  "Chocolate",
-  "Coral",
-  "CornflowerBlue",
-  "Cornsilk",
-  "Crimson",
-  "Cyan",
-  "DeepPink",
-  "Fuchsia",
-  "Gainsboro",
-  "GhostWhite",
-  "Gold",
-  "GoldenRod",
-  "Gray",
-  "Grey",
-  "Green",
-  "IndianRed",
-  "Indigo",
-  "Ivory",
-  "Khaki",
-  "Lavender",
-  "LavenderBlush",
-  "LawnGreen",
-  "LemonChiffon",
-  "LightBlue",
-  "LightCoral",
-  "LightCyan",
-  "LightGoldenRodYellow",
-  "LightGray",
-  "LightGrey",
-  "LightGreen",
-  "LightPink",
-  "LightSalmon",
-  "LightSeaGreen",
-  "LightSkyBlue",
-  "LightSteelBlue",
-  "LightYellow",
-  "Lime",
-  "LimeGreen",
-  "Linen",
-  "Magenta",
-  "Maroon",
-  "MediumAquaMarine",
-  "MediumBlue",
-  "MediumOrchid",
-  "MediumPurple",
-  "MediumSeaGreen",
-  "MediumSlateBlue",
-  "MediumSpringGreen",
-  "MediumTurquoise",
-  "MidnightBlue",
-  "MintCream",
-  "MistyRose",
-  "Moccasin",
-  "NavajoWhite",
-  "Navy",
-  "OldLace",
-  "Orange",
-  "OrangeRed",
-  "Orchid",
-  "PaleGoldenRod",
-  "PaleGreen",
-  "PaleTurquoise",
-  "PaleVioletRed",
-  "PapayaWhip",
-  "PeachPuff",
-  "Peru",
-  "Pink",
-  "Plum",
-  "PowderBlue",
-  "Purple",
-  "RebeccaPurple",
-  "Red",
-  "RosyBrown",
-  "RoyalBlue",
-  "SaddleBrown",
-  "Salmon",
-  "SandyBrown",
-  "SeaGreen",
-  "SeaShell",
-  "Sienna",
-  "Silver",
-  "SkyBlue",
-  "SlateGray",
-  "SlateGrey",
-  "Snow",
-  "SpringGreen",
-  "SteelBlue",
-  "Tan",
-  "Teal",
-  "Thistle",
-  "Tomato",
-  "Turquoise",
-  "Violet",
-  "Wheat",
-  "White",
-  "WhiteSmoke",
-  "Yellow",
-  "YellowGreen",
-]; 
+function get_hour(date_obj,num_days)
+{
+  var MS_PER_MINUTE = 60000;
+  var date = new Date();
+  var date1 = new Date(date - (num_days * MS_PER_MINUTE))
+  return String(date1.getHours()).padStart(2, '0') + ":" + String(date1.getMinutes()).padStart(2, '0')
+}
     
         var chartData = [
         <% is_in = 0 %>
         <% User.all.each do |user| %>
         <% if Share.find_by(user_id: user.id)%>
         <% for i in 0..17 %> 
-        <% if (((17-i).day.ago.to_date - Share.first().created_at.to_date) >= 0) %>
         {
-            "date": get_day(date,<%=(17-i)%>),
+            "date": get_hour(date,<%=(17-i)%>),
             "<%=user.name%>": 
-            //<%=i%>
-            <% is_in += 1%>
             <% tot = 0%>
-            <% if i != 17 %> 
-              <% Share.where(user_id: user.id).each do |share|%>
-                <%if(share.rob_hum_elf == 0)%>
-                  <%tot+= (Company.find(share.company_id).day_stocks_robot[((17-i).day.ago.to_date - Date.parse('8-1-2021').to_date).to_i]).to_i%>
-                <%elsif(share.rob_hum_elf == 1)%>
-                  <%tot+= (Company.find(share.company_id).day_stocks_human[((17-i).day.ago.to_date - Date.parse('8-1-2021').to_date).to_i]).to_i%>
-                <%elsif(share.rob_hum_elf == 2)%>
-                  <%tot+= (Company.find(share.company_id).day_stocks_elf[((17-i).day.ago.to_date - Date.parse('8-1-2021').to_date).to_i]).to_i%>
-                <%end%>
-              <%end%>
-            <% else %>
             <% Share.where(user_id: user.id).each do |share|%>
-                <%if(share.rob_hum_elf == 0)%>
-                  <%tot+= (Company.find(share.company_id).minute_stocks_robot[((((DateTime.now -  (17-i).minutes)-DateTime.new(2021,01,8,00, 27, 00))*24*60)-360).to_i]).to_i%>
-                <%elsif(share.rob_hum_elf == 1)%>
-                  <%tot+= (Company.find(share.company_id).minute_stocks_human[((((DateTime.now -  (17-i).minutes)-DateTime.new(2021,01,8,00, 27, 00))*24*60)-360).to_i]).to_i%>
-                <%elsif(share.rob_hum_elf == 2)%>
-                  <%tot+= (Company.find(share.company_id).minute_stocks_elf[((((DateTime.now -  (17-i).minutes)-DateTime.new(2021,01,8,00, 27, 00))*24*60)-360).to_i]).to_i%>
-                <%end%>
+              <%if(share.rob_hum_elf == 0)%>
+                <%tot+= (Company.find(share.company_id).minute_stocks_robot[((((DateTime.now -  (17-i).minutes)-DateTime.new(2021,01,8,00, 27, 00))*24*60)-360).to_i]).to_i%>
+              <%elsif(share.rob_hum_elf == 1)%>
+                <%tot+= (Company.find(share.company_id).minute_stocks_human[((((DateTime.now -  (17-i).minutes)-DateTime.new(2021,01,8,00, 27, 00))*24*60)-360).to_i]).to_i%>
+              <%elsif(share.rob_hum_elf == 2)%>
+                <%tot+= (Company.find(share.company_id).minute_stocks_elf[((((DateTime.now -  (17-i).minutes)-DateTime.new(2021,01,8,00, 27, 00))*24*60)-360).to_i]).to_i%>
               <%end%>
-            <% end %>
+            <%end%>
             <%=tot%>
-            <% if is_in == 1%>
+            <% if i == 0 %>
               <% session[:begin_tot] = tot%>
             <% end %>
-            <% if i == 17 %>
-              <%session[:total] = tot%>
-            <% end %>
+            <%session[:total_gains] = tot%>
         },
-        <% end %>
         <% end %>
         <% end %>
         <% end %>
@@ -375,7 +250,6 @@
     
       categoryField: "date",
       categoryAxis: {
-        parseDates: true,
         minPeriod: "DD",
         autoGridCount: false,
         gridCount: 50,
@@ -463,9 +337,9 @@
   <form action="/user/<%=session[:user_id]%>">
       <button>View Your Portfolio</button>
     </form>
-  </div>
-  <form action="/all_users_minutes">
-    <button>Switch to All Users Minutes View</button>
-  </form>
   <br>
+  </div>
+  <form action="/all_users">
+    <button>Back to All Users Monthly View</button>
+  </form>
   <div id="chartdiv"></div>
