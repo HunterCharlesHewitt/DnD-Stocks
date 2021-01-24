@@ -1,4 +1,4 @@
-<% if session[:user_id] && session[:user_id].to_i == params[:id].to_i %>
+
 <head>
     <script src="https://www.amcharts.com/lib/3/amcharts.js?x"></script>
     <script src="https://www.amcharts.com/lib/3/serial.js?x"></script>
@@ -150,8 +150,6 @@
           }
       }
     </style>
-
-
     
     <script>
     
@@ -165,14 +163,13 @@
             return rand == 0 ? 1 : -1
         }
     
-        function get_hour(date_obj,num_days)
+        function get_day(date_obj,num_days)
         {
-          var MS_PER_MINUTE = 60000;
-          var date = new Date();
-          var date1 = new Date(date - (num_days * MS_PER_MINUTE))
-          return String(date1.getHours()).padStart(2, '0') + ":" + String(date1.getMinutes()).padStart(2, '0')
+            var day_num = 1000 * 60 * 60 * 24;
+            var ret_day = date_obj - (day_num*num_days);
+            ret_day = new Date(ret_day)
+            return String(ret_day.getFullYear()) + "-" + String(ret_day.getMonth()+1).padStart(2, '0') + "-" + String(ret_day.getDate()).padStart(2, '0')
         }
-    
     
         function getCookie(name) {
             // Split cookie string and get all individual name=value pairs in an array
@@ -194,40 +191,176 @@
             return null;
         }
         
-        
         var date = new Date();
         var yesterday = date - 1000 * 60 * 60 * 24 * 2;   // current date's milliseconds - 1,000 ms * 60 s * 60 mins * 24 hrs * (# of days beyond one to go back)
         yesterday = new Date(yesterday);
-        console.log(get_hour(yesterday,3));
+        console.log(get_day(yesterday,3));
     
         var human_trade = 80;
         var robot_trade = 50;
         var elf_trade = 30;
+
+        const CSS_COLOR_NAMES = [
+  "AliceBlue",
+  "AntiqueWhite",
+  "Aqua",
+  "Aquamarine",
+  "Azure",
+  "Beige",
+  "Bisque",
+  "BlanchedAlmond",
+  "Blue",
+  "BlueViolet",
+  "Brown",
+  "BurlyWood",
+  "CadetBlue",
+  "Chartreuse",
+  "Chocolate",
+  "Coral",
+  "CornflowerBlue",
+  "Cornsilk",
+  "Crimson",
+  "Cyan",
+  "DeepPink",
+  "Fuchsia",
+  "Gainsboro",
+  "GhostWhite",
+  "Gold",
+  "GoldenRod",
+  "Gray",
+  "Grey",
+  "Green",
+  "IndianRed",
+  "Indigo",
+  "Ivory",
+  "Khaki",
+  "Lavender",
+  "LavenderBlush",
+  "LawnGreen",
+  "LemonChiffon",
+  "LightBlue",
+  "LightCoral",
+  "LightCyan",
+  "LightGoldenRodYellow",
+  "LightGray",
+  "LightGrey",
+  "LightGreen",
+  "LightPink",
+  "LightSalmon",
+  "LightSeaGreen",
+  "LightSkyBlue",
+  "LightSteelBlue",
+  "LightYellow",
+  "Lime",
+  "LimeGreen",
+  "Linen",
+  "Magenta",
+  "Maroon",
+  "MediumAquaMarine",
+  "MediumBlue",
+  "MediumOrchid",
+  "MediumPurple",
+  "MediumSeaGreen",
+  "MediumSlateBlue",
+  "MediumSpringGreen",
+  "MediumTurquoise",
+  "MidnightBlue",
+  "MintCream",
+  "MistyRose",
+  "Moccasin",
+  "NavajoWhite",
+  "Navy",
+  "OldLace",
+  "Orange",
+  "OrangeRed",
+  "Orchid",
+  "PaleGoldenRod",
+  "PaleGreen",
+  "PaleTurquoise",
+  "PaleVioletRed",
+  "PapayaWhip",
+  "PeachPuff",
+  "Peru",
+  "Pink",
+  "Plum",
+  "PowderBlue",
+  "Purple",
+  "RebeccaPurple",
+  "Red",
+  "RosyBrown",
+  "RoyalBlue",
+  "SaddleBrown",
+  "Salmon",
+  "SandyBrown",
+  "SeaGreen",
+  "SeaShell",
+  "Sienna",
+  "Silver",
+  "SkyBlue",
+  "SlateGray",
+  "SlateGrey",
+  "Snow",
+  "SpringGreen",
+  "SteelBlue",
+  "Tan",
+  "Teal",
+  "Thistle",
+  "Tomato",
+  "Turquoise",
+  "Violet",
+  "Wheat",
+  "White",
+  "WhiteSmoke",
+  "Yellow",
+  "YellowGreen",
+]; 
     
         var chartData = [
-        <% if Share.find_by(user_id: params[:id])%>
+        <% is_in = 0 %>
+        <% User.all.each do |user| %>
+        <% if Share.find_by(user_id: user.id)%>
         <% for i in 0..17 %> 
+        <% if (((17-i).day.ago.to_date - Share.first().created_at.to_date) >= 0) %>
         {
-            "date": get_hour(date,<%=(17-i)%>),
-            "Robot": 
+            "date": get_day(date,<%=(17-i)%>),
+            "<%=user.name%>": 
+            //<%=i%>
+            <% is_in += 1%>
             <% tot = 0%>
-            <% Share.where(user_id: params[:id]).each do |share|%>
-              <%if(share.rob_hum_elf == 0)%>
-                <%tot+= (Company.find(share.company_id).minute_stocks_robot[((((DateTime.now -  (17-i).minutes)-DateTime.new(2021,01,8,00, 27, 00))*24*60)-360).to_i]).to_i%>
-              <%elsif(share.rob_hum_elf == 1)%>
-                <%tot+= (Company.find(share.company_id).minute_stocks_human[((((DateTime.now -  (17-i).minutes)-DateTime.new(2021,01,8,00, 27, 00))*24*60)-360).to_i]).to_i%>
-              <%elsif(share.rob_hum_elf == 2)%>
-                <%tot+= (Company.find(share.company_id).minute_stocks_elf[((((DateTime.now -  (17-i).minutes)-DateTime.new(2021,01,8,00, 27, 00))*24*60)-360).to_i]).to_i%>
+            <% if i != 17 %> 
+              <% Share.where(user_id: user.id).each do |share|%>
+                <%if(share.rob_hum_elf == 0)%>
+                  <%tot+= (Company.find(share.company_id).day_stocks_robot[((17-i).day.ago.to_date - Date.parse('8-1-2021').to_date).to_i]).to_i%>
+                <%elsif(share.rob_hum_elf == 1)%>
+                  <%tot+= (Company.find(share.company_id).day_stocks_human[((17-i).day.ago.to_date - Date.parse('8-1-2021').to_date).to_i]).to_i%>
+                <%elsif(share.rob_hum_elf == 2)%>
+                  <%tot+= (Company.find(share.company_id).day_stocks_elf[((17-i).day.ago.to_date - Date.parse('8-1-2021').to_date).to_i]).to_i%>
+                <%end%>
               <%end%>
-            <%end%>
+            <% else %>
+            <% Share.where(user_id: user.id).each do |share|%>
+                <%if(share.rob_hum_elf == 0)%>
+                  <%tot+= (Company.find(share.company_id).minute_stocks_robot[((((DateTime.now -  (17-i).minutes)-DateTime.new(2021,01,8,00, 27, 00))*24*60)-360).to_i]).to_i%>
+                <%elsif(share.rob_hum_elf == 1)%>
+                  <%tot+= (Company.find(share.company_id).minute_stocks_human[((((DateTime.now -  (17-i).minutes)-DateTime.new(2021,01,8,00, 27, 00))*24*60)-360).to_i]).to_i%>
+                <%elsif(share.rob_hum_elf == 2)%>
+                  <%tot+= (Company.find(share.company_id).minute_stocks_elf[((((DateTime.now -  (17-i).minutes)-DateTime.new(2021,01,8,00, 27, 00))*24*60)-360).to_i]).to_i%>
+                <%end%>
+              <%end%>
+            <% end %>
             <%=tot%>
-            <% if i == 0 %>
+            <% if is_in == 1%>
               <% session[:begin_tot] = tot%>
             <% end %>
-            <%session[:total_gains] = tot%>
+            <% if i == 17 %>
+              <%session[:total] = tot%>
+            <% end %>
         },
         <% end %>
         <% end %>
+        <% end %>
+        <% end %>
+
     ];
     var chart = AmCharts.makeChart("chartdiv", {
       type: "serial",
@@ -242,7 +375,7 @@
     
       categoryField: "date",
       categoryAxis: {
-        title: "Hour:Minute",
+        parseDates: true,
         minPeriod: "DD",
         autoGridCount: false,
         gridCount: 50,
@@ -270,23 +403,39 @@
         gridAlpha: 0,
         axisAlpha: 0
       }],
-      graphs: [{
-          id: "robot",
-          title: "<%=User.find(params[:id]).name%>: ",
-          valueField: "Robot",
-          type: "line",
-          valueAxis: "a3",
-          lineColor: <%if session[:begin_tot] >= session[:total_gains]%> "#ff5755"<%else %>"#66ff00" <%end%>, 
-          balloonText: "[[value]] CP",
-          lineThickness: 1,
-          legendValueText: "[[value]]",
-          bullet: "square",
-          bulletBorderColor: <%if session[:begin_tot] >= session[:total_gains]%> "#ff5755"<%else %>"#66ff00" <%end%>,
-          bulletBorderThickness: 1,
-          bulletBorderAlpha: 1,
-          dashLengthField: "dashLength",
-          animationPlayed: true
-        }],
+      graphs: [<% User.all.each do |user| %>{
+        id: "<%=user.name%>",
+        title: "<%=user.name%>: ",
+        valueField: "<%=user.name%>",
+        type: "line",
+        valueAxis: "a3",
+        //console.log("<%=session[:begin_tot]%>")
+        //console.log("<%=session[:total]%>")
+        lineColor: "#<% luma = 0 
+         col=""
+        while(luma < 40)
+        puts(luma)
+
+        puts("*********************") 
+        col = ("%06x" % (rand * 0xffffff))
+        puts(col)
+        col=col.to_i(16) 
+         r = (col >> 16) & 0xff
+          g = (col >>  8) & 0xff
+           b = (col >>  0) & 0xff 
+           luma = 0.2126 * r + 0.7152 * g + 0.0722 * b
+           end %><%=col.to_s(16)%><%puts(col.to_s(16))%>", 
+        balloonText: "[[value]] CP",
+        lineThickness: 1,
+        legendValueText: "[[value]]",
+        bullet: "square",
+        bulletBorderColor: "#<%="%06x" % (rand * 0xffffff)%>",
+        bulletBorderThickness: 1,
+        bulletBorderAlpha: 1,
+        dashLengthField: "dashLength",
+        animationPlayed: true
+      },<%end%>],
+  
     
       chartCursor: {
         zoomable: false,
@@ -302,94 +451,16 @@
         color: "#FFFFFF"
       }
     });
-    
-  
-    </script>
-    
-    
-    <br>
-    <h1>Zail Stock Exchange: <%=User.find(params[:id]).name%>'s Portfolio </h1>
-    <div style="float:left;margin-right:10px">
-    <form action="/user/<%=params[:id]%>">
-      <button>Switch to Monthly Portfolio View</button>
+  </script>
+  <br>
+  <h1>Zail Stock Exchange: Friends </h1>
+  <div style="float:left;margin-right:10px">
+    <form action="/stocks/<%=params[:id]%>">
+      <button type="submit">Switch to Market View</button>
     </form>
-    </div>
-    <div style="float:left;margin-right:10px">
-    <form action="/stocks/<%=Company.first().id%>">
-      <button>Switch back to Market View</button>
+  </div>
+  <form action="/user/<%=session[:user_id]%>">
+      <button>View Your Portfolio</button>
     </form>
-    </div>
-    <form action="/all_users">
-      <button>View Friends' Data</button>
-    </form>
-    <br>
-    <div id="chartdiv"></div>	
-    <% prof = 0 %>
-    <% tota = 0 %>
-
-    <% Share.where(user_id: params[:id]).each do |share|%>
-    <%if share.rob_hum_elf == 0%>
-    <% curr_price = (Company.find(share.company_id).minute_stocks_robot[((((DateTime.now -  (0).minutes)-DateTime.new(2021,01,8,00, 27, 00))*24*60)-360).to_i]).to_i%>
-    <% elsif share.rob_hum_elf == 1 %>
-    <% curr_price = (Company.find(share.company_id).minute_stocks_human[((((DateTime.now -  (0).minutes)-DateTime.new(2021,01,8,00, 27, 00))*24*60)-360).to_i]).to_i%>
-    <%else %>
-    <% curr_price = (Company.find(share.company_id).minute_stocks_elf[((((DateTime.now -  (0).minutes)-DateTime.new(2021,01,8,00, 27, 00))*24*60)-360).to_i]).to_i%>
-    <% end %>
-    <%prof += (curr_price - share.buy_price)%>
-    <% tota += curr_price %> 
-    <% end %>
-
-    <h3>Current Invested Wealth: <%=tota %> CP</h3>
-    <h3>Current Uninvested Wealth: <%=User.find(params[:id]).uninvested_wealth %> CP</h3>
-
-    <h3>Total Gains: <span style="color:<% if((tota + User.find(params[:id]).uninvested_wealth.to_i) - User.find(params[:id]).starting_wealth.to_i ) > 0  %> #66ff00<% else %>#ff5755<% end %>">
-      <%=(tota + User.find(params[:id]).uninvested_wealth.to_i) - User.find(params[:id]).starting_wealth.to_i %> CP</span></h3>
-    <br>
-    <h1>Investments</h1>
-    <table>
-      <tr style="font-size: large;">
-        <th>Company</th>
-        <th>Market</th>
-        <th>Date</th>
-        <th>Buy Price</th>
-        <th>Current Price</th>
-        <th>Profit</th>
-        <th></th>
-      </tr>
-      <tr></tr><tr></tr><tr></tr>
-      <% Share.where(user_id: params[:id]).each do |share|%>
-      <tr>
-        <td><%= Company.find(share.company_id).name %></td>
-        <td>
-          <%if share.rob_hum_elf == 0%>
-          <% curr_price = (Company.find(share.company_id).minute_stocks_robot[((((DateTime.now -  (0).minutes)-DateTime.new(2021,01,8,00, 27, 00))*24*60)-360).to_i]).to_i%>
-          Robot
-          <% elsif share.rob_hum_elf == 1 %>
-          <% curr_price = (Company.find(share.company_id).minute_stocks_human[((((DateTime.now -  (0).minutes)-DateTime.new(2021,01,8,00, 27, 00))*24*60)-360).to_i]).to_i%>
-          Human
-          <%else %>
-          <% curr_price = (Company.find(share.company_id).minute_stocks_elf[((((DateTime.now -  (0).minutes)-DateTime.new(2021,01,8,00, 27, 00))*24*60)-360).to_i]).to_i%>
-          Elf
-          <% end %>
-        </td>
-        <td>
-          <%=share.created_at.strftime("%m/%d/%Y")%>
-        </td>
-        <td>
-          <%=share.buy_price %> CP
-        </td>
-        <td>
-          <%= curr_price %> CP
-        </td>
-        <td>
-          <span style="color: <%if curr_price - share.buy_price > 0 %>#66ff00 <%else%>#ff5755<%end%>"> <%=curr_price - share.buy_price %> CP</span> 
-        </td>
-        <td>
-          <form action= <%="/sell/#{share.id}"%>>
-            <button>Sell</button>
-          </form>
-        </td>
-      </tr>
-      <% end%> 
-    </table>
-    <% end %>
+  <br>
+  <div id="chartdiv"></div>

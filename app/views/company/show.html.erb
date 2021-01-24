@@ -409,8 +409,13 @@
     <button>Switch to Minute by Minute View</button>
   </form>
   </div>
+  <div style="float:left;margin-right:10px">
   <form action="/user/<%=session[:user_id]%>">
     <button>View Your Portfolio</button>
+  </form>
+  </div>  
+  <form action="/all_users">
+    <button>View Friends' Data</button>
   </form>
   <br>
   <% if User.find(session[:user_id]).id.to_i < 5%> 

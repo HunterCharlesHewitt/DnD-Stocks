@@ -416,12 +416,15 @@ type: "serial",
   <div style="float:left;margin-right:10px">
   <form action="/stocks/<%=params[:id]%>">
     <button type="submit">Switch to Monthly View</button>
-  </form>
-</div>
+  </form></div>
+  <div style="float:left;margin-right:10px">
 <form action="/user/<%=session[:user_id]%>">
     <button>View Your Portfolio</button>
+  </form></div>
+  <form action="/all_users">
+    <button>View Friends' Data</button>
   </form>
-  
+
   <br>
   <div id="chartdiv"></div>	
   <div style="width:100%">	

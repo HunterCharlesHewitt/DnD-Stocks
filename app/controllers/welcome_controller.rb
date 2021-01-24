@@ -13,4 +13,5 @@ class WelcomeController < ApplicationController
     
     redirect_to "/scan/"
   end
+  
 end
