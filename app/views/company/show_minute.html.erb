@@ -409,21 +409,47 @@ type: "serial",
   
 
   </script>
+
+  <%tota=0%>
+  <% prof = 0 %>
+    <% Share.where(user_id: session[:user_id]).each do |share|%>
+
+    <%if share.rob_hum_elf == 0%>
+    <% curr_price = (Company.find(share.company_id).minute_stocks_robot[((((DateTime.now -  (0).minutes)-DateTime.new(2021,01,8,00, 27, 00))*24*60)-360).to_i]).to_i%>
+    <% elsif share.rob_hum_elf == 1 %>
+    <% curr_price = (Company.find(share.company_id).minute_stocks_human[((((DateTime.now -  (0).minutes)-DateTime.new(2021,01,8,00, 27, 00))*24*60)-360).to_i]).to_i%>
+    <%else %>
+    <% curr_price = (Company.find(share.company_id).minute_stocks_elf[((((DateTime.now -  (0).minutes)-DateTime.new(2021,01,8,00, 27, 00))*24*60)-360).to_i]).to_i%>
+    <% end %>
+    <%prof += (curr_price - share.buy_price)%>
+    <% tota += curr_price %> 
+    <% end %>
   
+
   
   <br>
-  <h1>Zail Stock Exchange: <%=@company.name%></h1>
-  <div style="float:left;margin-right:10px">
+  <div style="width:100%">
+    <div style="display:inline-block;  white-space: nowrap; overflow: hidden;">
+    <h1>Zail Stock Exchange:<%=@company.name%> </h1>
+    </div>
+    <div style="display:inline-block;margin-left:20%;white-space: nowrap; overflow: hidden;">
+    <h1>Your Total Gains: <span style="color:<% if((tota + User.find(session[:user_id]).uninvested_wealth.to_i) - User.find(session[:user_id]).starting_wealth.to_i ) > 0  %> #66ff00<% else %>#ff5755<% end %>">
+      <%=(tota + User.find(session[:user_id]).uninvested_wealth.to_i) - User.find(session[:user_id]).starting_wealth.to_i %> CP</span></h1>
+    </div>
+  </div>
+  <div style="display:inline-block;margin-right:10px">
   <form action="/stocks/<%=params[:id]%>">
     <button type="submit">Switch to Monthly View</button>
   </form></div>
-  <div style="float:left;margin-right:10px">
+  <div style="display:inline-block;margin-right:10px">
 <form action="/user/<%=session[:user_id]%>">
     <button>View Your Portfolio</button>
   </form></div>
+  <div style="display:inline-block;margin-right:10px">
   <form action="/all_users">
     <button>View Friends' Data</button>
   </form>
+</div>
 
   <br>
   <div id="chartdiv"></div>	

@@ -232,7 +232,7 @@
     var chart = AmCharts.makeChart("chartdiv", {
       type: "serial",
       theme: "dark",
-      dataDateFormat: "YYYY-MM-DD",
+      dataDateFormat: "HH:mm",
       dataProvider: chartData,
     
       addClassNames: true,
@@ -250,17 +250,8 @@
         gridColor: "#FFFFFF",
         axisColor: "#555555",
         dateFormats: [{
-            period: 'DD',
-            format: 'DD'
-        }, {
-            period: 'WW',
-            format: 'MMM DD'
-        }, {
-            period: 'MM',
-            format: 'MMM'
-        }, {
-            period: 'YYYY',
-            format: 'YYYY'
+            period: 'mm',
+            format: 'HH'
         }]
       },
     
