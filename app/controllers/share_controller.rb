@@ -40,7 +40,22 @@ class ShareController < ApplicationController
             new_rob2 = Marshal.load(Marshal.dump(comp.day_stocks_robot)) 
             new_hum2 = Marshal.load(Marshal.dump(comp.day_stocks_human)) 
             new_elf2 = Marshal.load(Marshal.dump(comp.day_stocks_elf)) 
-            for i in 55658..84458
+
+            if (new_rob.size < 50658)
+                for i in new_rob.size..84458
+                    new_rob << "0"
+                    new_hum << "0"
+                    new_elf << "0"
+                end
+            end
+            if (new_rob2.size < 200)
+                for i in new_rob2.size..200
+                    new_rob2 << "0"
+                    new_hum2 << "0"
+                    new_elf2 << "0"
+                end
+            end
+            for i in 50658..84458
                 is_boom = rand(100) >= 50 ? 1 : -1 
                 if(share.rob_hum_elf == 0)
                     new_rob[i] = (new_rob[i-1].to_i + 1 + (is_boom)*rand(50)).to_s;
@@ -49,11 +64,13 @@ class ShareController < ApplicationController
                 else
                     new_elf[i] = (new_elf[i-1].to_i + 1 + (is_boom)*rand(30)).to_s;
                 end  
+                if i % 1440 == 0 
+                    new_rob2[i / 1440] = new_rob[i]
+                    new_hum2[i / 1440] = new_hum[i]
+                    new_elf2[i / 1440] = new_elf[i]
+                end 
             end     
             
-            new_rob2[16] = new_rob[24445];
-            new_hum2[16] = new_hum[24445];
-            new_elf2[16] = new_elf[24445];
         
             comp.update_attribute(:minute_stocks_robot,new_rob);
             comp.update_attribute(:minute_stocks_elf,new_elf) ;
