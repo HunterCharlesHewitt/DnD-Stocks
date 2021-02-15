@@ -40,13 +40,14 @@ class ShareController < ApplicationController
             new_rob2 = Marshal.load(Marshal.dump(comp.day_stocks_robot)) 
             new_hum2 = Marshal.load(Marshal.dump(comp.day_stocks_human)) 
             new_elf2 = Marshal.load(Marshal.dump(comp.day_stocks_elf)) 
-            for i in 23707..25702
+            for i in 55658..84458
+                is_boom = rand(100) >= 50 ? 1 : -1 
                 if(share.rob_hum_elf == 0)
-                    new_rob[i] = (new_rob[i-1].to_i + 1 + rand(50)).to_s;
+                    new_rob[i] = (new_rob[i-1].to_i + 1 + (is_boom)*rand(50)).to_s;
                 elsif (share.rob_hum_elf == 1)
-                    new_hum[i] = (new_hum[i-1].to_i + 1 + rand(40)).to_s;
+                    new_hum[i] = (new_hum[i-1].to_i + 1 + (is_boom)*rand(40)).to_s;
                 else
-                    new_elf[i] = (new_elf[i-1].to_i + 1 + rand(30)).to_s;
+                    new_elf[i] = (new_elf[i-1].to_i + 1 + (is_boom)*rand(30)).to_s;
                 end  
             end     
             
