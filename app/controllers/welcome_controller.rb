@@ -135,6 +135,12 @@ class WelcomeController < ApplicationController
           else 
             new_elf << val3
           end
+
+          while(new_rob2.size <= i/1440)
+            new_rob2 << val1
+            new_hum2 << val2
+            new_elf2 << val3
+          end
     
           
         if(i % 1440 == 0)
