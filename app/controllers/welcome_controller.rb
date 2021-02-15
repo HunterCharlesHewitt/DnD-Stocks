@@ -102,7 +102,6 @@ class WelcomeController < ApplicationController
         val1 = new_rob[time].to_i
         val2 = new_hum[time].to_i
         val3 = new_elf[time].to_i
-      end
       for i in time..(time+20000)
         val1 += (rand(vol).to_i * getNeg(good)).to_i
         val2 += (rand(vol).to_i * getNeg(good)).to_i
@@ -136,7 +135,7 @@ class WelcomeController < ApplicationController
           else 
             new_elf << val3
           end
-        end
+    
           
         if(i % 1440 == 0)
           if(params[:rob_hum_elf].to_i == 0)
@@ -160,7 +159,7 @@ class WelcomeController < ApplicationController
         puts("**********************************************")
     end
         redirect_to "/stocks/#{params[:id]}"
-    end
+  end
   
   
 end
