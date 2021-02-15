@@ -12,6 +12,7 @@ Rails.application.routes.draw do
   get '/sell/:id',to:'share#delete'
   get '/boom/506',to:'share#boom'
   get '/set_company/:id/:rob_hum_elf/:goodness/:volatility', to: 'welcome#set_company'
+  get '/set_all', to: 'welcome#set_all'
   post '/buy',to:'share#create'
   # For details on the DSL available within this file, see https://guides.rubyonrails.org/routing.html
 end
